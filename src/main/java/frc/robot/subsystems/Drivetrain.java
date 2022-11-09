@@ -7,7 +7,11 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
+import java.util.ResourceBundle.Control;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
@@ -16,13 +20,16 @@ import frc.robot.util.MotorFactory;
 
 public class Drivetrain extends SubsystemBase {
 
+  public WPI_TalonFX m_leftMotor1;
+  public WPI_TalonFX m_rightMotor1;
 
   public Drivetrain() {
-    this(MotorFactory.createTalonFX(Constants.drive.leftMotorPorts[0]), MotorFactory.createTalonFX(Constants.drive.leftMotorPorts[1]), MotorFactory.createTalonFX(Constants.drive.rightMotorPorts[0]), MotorFactory.createTalonFX(Constants.drive.rightMotorPorts[1]));
+    this(MotorFactory.createTalonFX(Constants.drive.leftMotorPorts[0]), MotorFactory.createTalonFX(Constants.drive.rightMotorPorts[0]));
   }
 
-  public Drivetrain(WPI_TalonFX leftMotor1, WPI_TalonFX leftMotor2, WPI_TalonFX rightMotor1, WPI_TalonFX rightMotor2) {
-
+  public Drivetrain(WPI_TalonFX leftMotor1, WPI_TalonFX rightMotor1) {
+    m_leftMotor1 = leftMotor1;
+    m_rightMotor1 = rightMotor1;
   }
 
   /**
@@ -38,5 +45,11 @@ public class Drivetrain extends SubsystemBase {
    * @param forward the commanded forward movement
    * @param turn the commanded turn rotation
    */
+
+   public void arcadeDrive(double throttle, double turn){
+     m_leftMotor1.set(ControlMode.PercentOutput, throttle + turn);
+     m_rightMotor1.set(ControlMode.PercentOutput, throttle - turn);
+
+   }
  
 }

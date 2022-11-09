@@ -8,8 +8,10 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.ArcadeDrive;
 import frc.robot.controls.Driver;
 import frc.robot.controls.Operator;
+import frc.robot.subsystems.Drivetrain;
 import frc.robot.util.ShuffleboardManager;
 
 /**
@@ -20,6 +22,7 @@ import frc.robot.util.ShuffleboardManager;
  */
 public class Robot extends TimedRobot {
   private Command m_autoCommand;
+  Drivetrain m_drive = new Drivetrain();
   public static ShuffleboardManager shuffleboard = new ShuffleboardManager();
 
   /**
@@ -36,6 +39,8 @@ public class Robot extends TimedRobot {
 
     Driver.configureControls();
     Operator.configureControls();
+    m_drive.setDefaultCommand(new ArcadeDrive(m_drive));
+    
   }
 
   /**
