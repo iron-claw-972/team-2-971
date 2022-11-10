@@ -12,6 +12,7 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.controls.Driver;
 import frc.robot.controls.Operator;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Singulator;
 import frc.robot.util.ShuffleboardManager;
 
 /**
@@ -22,7 +23,8 @@ import frc.robot.util.ShuffleboardManager;
  */
 public class Robot extends TimedRobot {
   private Command m_autoCommand;
-  Drivetrain m_drive = new Drivetrain();
+  public static Drivetrain m_drive = new Drivetrain();
+  public static Singulator m_singulator = new Singulator();
   public static ShuffleboardManager shuffleboard = new ShuffleboardManager();
 
   /**
