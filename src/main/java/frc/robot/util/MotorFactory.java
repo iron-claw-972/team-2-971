@@ -115,6 +115,10 @@ public class MotorFactory {
     return createSparkMAX(id, motortype, kSparkMAXDefaultCurrentLimit);
   }
 
+  public static WPI_TalonFX createTalonFX(int id) {
+    return createTalonFX(id, NeutralMode.Brake);
+  }
+
   /**
   * Create a configured TalonFX with all the default settings.
   * https://motors.vex.com/vexpro-motors/falcon
@@ -123,7 +127,7 @@ public class MotorFactory {
   * 
   * @return a fully configured TalonFX
   */
-  public static WPI_TalonFX createTalonFX(int id) {
+  public static WPI_TalonFX createTalonFX(int id, NeutralMode neutralMode) {
 
     if (id == -1) return null;
 
@@ -141,7 +145,7 @@ public class MotorFactory {
     talon.configFactoryDefault();
     talon.configAllSettings(config);
     talon.enableVoltageCompensation(false);
-    talon.setNeutralMode(NeutralMode.Coast);
+    talon.setNeutralMode(neutralMode);
     talon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
     return talon;
