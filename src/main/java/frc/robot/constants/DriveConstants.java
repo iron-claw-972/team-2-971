@@ -9,7 +9,7 @@ public class DriveConstants {
   public final double kTrackWidth = Units.inchesToMeters(24.79); // Distance from left wheels to right wheels
   public final double kWheelRadius = Units.inchesToMeters(2); // Wheel radius
   public final double kEncoderResolution = 2048; // 2048 ticks per rotation
-  public final double kGearRatio = (double) 62 / 12; // # driven gear teeth / # driver gear teeth
+  public final double kGearRatio = (double) 62 / 8; // # driven gear teeth / # driver gear teeth
 
   public final double kDriveSlewRate = 3; // 1/X seconds from 0 to 1
   public final double kTurnSlewRate = 3; // 1/X seconds from 0 to 1
