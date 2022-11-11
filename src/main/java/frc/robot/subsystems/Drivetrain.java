@@ -13,8 +13,6 @@ import com.kauailabs.navx.frc.AHRS;
 import ctre_shims.PhoenixMotorControllerGroup;
 import ctre_shims.TalonEncoder;
 
-import java.util.function.BiConsumer;
-
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.math.controller.PIDController;

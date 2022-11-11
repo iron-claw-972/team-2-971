@@ -14,6 +14,7 @@ import frc.robot.controls.Driver;
 import frc.robot.controls.Operator;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Singulator;
+import frc.robot.util.PathLoader;
 import frc.robot.util.ShuffleboardManager;
 
 /**
@@ -25,7 +26,7 @@ import frc.robot.util.ShuffleboardManager;
 public class Robot extends TimedRobot {
   private Command m_autoCommand;
   public static Drivetrain drive = new Drivetrain();
-  // public static Singulator m_singulator = new Singulator();
+  public static Singulator singulator = new Singulator();
   public static ShuffleboardManager shuffleboard = new ShuffleboardManager();
 
   /**
@@ -34,18 +35,18 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    PathLoader.loadPaths();
+
+    drive.setDefaultCommand(new ArcadeDrive(drive));
+    // m_drive.setDefaultCommand(new FFDrive(m_drive));
 
     // This is really annoying so it's disabled
     DriverStation.silenceJoystickConnectionWarning(true);
 
-    shuffleboard.setup();
-
     Driver.configureControls();
     Operator.configureControls();
-
-    drive.setDefaultCommand(new ArcadeDrive(drive));
-    // m_drive.setDefaultCommand(new FFDrive(m_drive));
     
+    shuffleboard.setup();
   }
 
   /**
