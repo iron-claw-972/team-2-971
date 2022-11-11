@@ -24,7 +24,7 @@ import frc.robot.util.ShuffleboardManager;
  */
 public class Robot extends TimedRobot {
   private Command m_autoCommand;
-  public static Drivetrain m_drive = new Drivetrain();
+  public static Drivetrain drive = new Drivetrain();
   // public static Singulator m_singulator = new Singulator();
   public static ShuffleboardManager shuffleboard = new ShuffleboardManager();
 
@@ -43,7 +43,7 @@ public class Robot extends TimedRobot {
     Driver.configureControls();
     Operator.configureControls();
 
-    m_drive.setDefaultCommand(new ArcadeDrive(m_drive));
+    drive.setDefaultCommand(new ArcadeDrive(drive));
     // m_drive.setDefaultCommand(new FFDrive(m_drive));
     
   }

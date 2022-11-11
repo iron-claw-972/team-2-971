@@ -13,9 +13,12 @@ import com.kauailabs.navx.frc.AHRS;
 import ctre_shims.PhoenixMotorControllerGroup;
 import ctre_shims.TalonEncoder;
 
+import java.util.function.BiConsumer;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -59,7 +62,8 @@ public class Drivetrain extends SubsystemBase {
   private final DifferentialDriveOdometry m_odometry;
 
   private final SimpleMotorFeedforward m_driveFF = new SimpleMotorFeedforward(Constants.drive.kDriveS, Constants.drive.kDriveV);
-
+  private final RamseteController ramseteController = new RamseteController(Constants.auto.kRamseteB, Constants.auto.kRamseteZeta); 
+  
   public Drivetrain() {
     this(
       Motors.createTalonFX(Constants.drive.kLeftMotorId, NeutralMode.Brake),
@@ -101,6 +105,13 @@ public class Drivetrain extends SubsystemBase {
     updateOdometry();
   }
 
+  public RamseteController getRamseteController(){
+    return ramseteController; 
+  }
+
+  public DifferentialDriveKinematics getKinematics(){
+    return m_kinematics; 
+  }
   public void setSpeeds(DifferentialDriveWheelSpeeds speeds) {
     // Calculate FF
     final double leftFeedforward = m_driveFF.calculate(speeds.leftMetersPerSecond);
@@ -132,6 +143,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void resetOdometry(Pose2d pose) {
+    resetEncoders();
     m_odometry.resetPosition(pose, m_gyro.getRotation2d());
   }
 
@@ -147,4 +159,17 @@ public class Drivetrain extends SubsystemBase {
   public void arcadeDrive(double throttle, double turn){
     m_dDrive.arcadeDrive(throttle, turn);
   }
+
+  public void tankDriveVolts(double leftVolts, double rightVolts){
+    m_leftMotors.setVoltage(leftVolts);
+    m_rightMotors.setVoltage(rightVolts);
+    m_dDrive.feed();
+  }
+
+  public DifferentialDriveWheelSpeeds getWheelSpeeds(){
+    return new DifferentialDriveWheelSpeeds(m_leftEncoder.getRate(), m_rightEncoder.getRate());
+
+  }
+
+
 }
