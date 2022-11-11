@@ -10,23 +10,13 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import frc.robot.constants.Constants;
 
-public class Functions {
+public class AutoPaths {
 
   private static HashMap<String, Trajectory> trajectories = new HashMap<String, Trajectory>();
 
-  //is an exponential function that maintains positive or negative
-  public static double expoMS(double exponent, double base) {
-    //weird stuff will happen if you don't put a number > 0
-    double finVal = Math.pow(Math.abs(base),exponent);
-    if (base < 0) {
-      finVal *= -1;
-    }
-    return finVal;
-  }
-
   public static void loadPaths() {
     double totalTime = 0;
-    File[] directoryListing = Filesystem.getDeployDirectory().toPath().resolve(Constants.auto.kTrajectoryDirectory).toFile().listFiles();
+    File[] directoryListing = Filesystem.getDeployDirectory().toPath().resolve(Constants.auto.kPathsDirectory).toFile().listFiles();
     if (directoryListing != null) {
       for (File file : directoryListing) {
         if (file.isFile() && file.getName().indexOf(".") != -1) {
@@ -55,7 +45,7 @@ public class Functions {
     try {
       return TrajectoryUtil.fromPathweaverJson(
         Filesystem.getDeployDirectory().toPath().resolve(
-          Constants.auto.kTrajectoryDirectory + trajectoryName + ".wpilib.json"
+          Constants.auto.kPathsDirectory + trajectoryName + ".wpilib.json"
         )
       );
     } catch (IOException ex) {

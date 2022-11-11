@@ -15,6 +15,7 @@ public class ShuffleboardManager {
 
   ShuffleboardTab m_mainTab = Shuffleboard.getTab("Main");
   ShuffleboardTab m_autoTab = Shuffleboard.getTab("Auto");
+  ShuffleboardTab m_driveTab = Shuffleboard.getTab("Drive");
 
   NetworkTableEntry m_commandScheduler = m_mainTab.add("Command Scheduler", "NULL").getEntry();
   

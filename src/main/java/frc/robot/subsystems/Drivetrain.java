@@ -14,7 +14,6 @@ import ctre_shims.PhoenixMotorControllerGroup;
 import ctre_shims.TalonEncoder;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -27,7 +26,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
-import frc.robot.util.MotorFactory;
+import frc.robot.util.Motors;
 
 
 public class Drivetrain extends SubsystemBase {
@@ -63,8 +62,8 @@ public class Drivetrain extends SubsystemBase {
 
   public Drivetrain() {
     this(
-      MotorFactory.createTalonFX(Constants.drive.kLeftMotorId, NeutralMode.Brake),
-      MotorFactory.createTalonFX(Constants.drive.kRightMotorId, NeutralMode.Brake)
+      Motors.createTalonFX(Constants.drive.kLeftMotorId, NeutralMode.Brake),
+      Motors.createTalonFX(Constants.drive.kRightMotorId, NeutralMode.Brake)
     );
   }
 
@@ -88,14 +87,18 @@ public class Drivetrain extends SubsystemBase {
     m_leftEncoder.setDistancePerPulse(2 * Math.PI * Constants.drive.kWheelRadius / Constants.drive.kGearRatio / Constants.drive.kEncoderResolution);
     m_rightEncoder.setDistancePerPulse(2 * Math.PI * Constants.drive.kWheelRadius / Constants.drive.kGearRatio / Constants.drive.kEncoderResolution);
 
-    m_leftEncoder.reset();
-    m_rightEncoder.reset();
+    resetEncoders();
 
     // Drivetrain setup
-    m_dDrive = new DifferentialDrive(m_leftMotor1, m_rightMotor1);
+    m_dDrive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 
     // Odometry setup
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
+  }
+
+  @Override
+  public void periodic() {
+    updateOdometry();
   }
 
   public void setSpeeds(DifferentialDriveWheelSpeeds speeds) {
@@ -130,6 +133,11 @@ public class Drivetrain extends SubsystemBase {
 
   public void resetOdometry(Pose2d pose) {
     m_odometry.resetPosition(pose, m_gyro.getRotation2d());
+  }
+
+  public void resetEncoders() {
+    m_leftEncoder.reset();
+    m_rightEncoder.reset();
   }
 
   public Pose2d getPose() {

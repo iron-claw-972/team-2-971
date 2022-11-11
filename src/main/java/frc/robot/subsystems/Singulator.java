@@ -8,9 +8,11 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.util.Motors;
 
 
 public class Singulator extends SubsystemBase {
@@ -18,7 +20,7 @@ public class Singulator extends SubsystemBase {
   public CANSparkMax m_motor;
 
   public Singulator() {
-    this(new CANSparkMax(0, MotorType.kBrushless));
+    this(Motors.createSparkMAX(0, MotorType.kBrushless, IdleMode.kCoast));
   }
 
   public Singulator(CANSparkMax motor) {
