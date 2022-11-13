@@ -1,4 +1,4 @@
-package frc.robot.commands.auto.modes;
+package frc.robot.commands.auto.routines;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Robot;
 import frc.robot.commands.auto.PathPlannerCommand;
@@ -12,7 +12,7 @@ public class OneDotAuto extends SequentialCommandGroup{
    public OneDotAuto(Drivetrain drive){
        addRequirements(drive);
        addCommands(
-           new PathPlannerCommand("OneDotAuto", true, true)
+           new PathPlannerCommand("OneDotAuto", 0, true)
        );
    }
 

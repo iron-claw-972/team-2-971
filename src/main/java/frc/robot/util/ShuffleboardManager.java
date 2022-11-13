@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
-import frc.robot.commands.auto.modes.OneDotAuto;
+import frc.robot.commands.auto.routines.OneDotAuto;
 
 public class ShuffleboardManager {
 

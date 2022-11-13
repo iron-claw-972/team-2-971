@@ -1,5 +1,7 @@
 package frc.robot.commands.auto;
 
+import java.util.ArrayList;
+
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPRamseteCommand;
 
@@ -11,23 +13,26 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.util.PathLoader;
 
 public class PathPlannerCommand extends SequentialCommandGroup{
-    private Drivetrain m_drive; 
+    private Drivetrain m_drive;  
 
-    public PathPlannerCommand(String trajectoryName, boolean isFirstPath, boolean stopAtEnd){
-        this(trajectoryName, Robot.drive, isFirstPath, stopAtEnd);
-
+    public PathPlannerCommand(String pathGroupName, int pathIndex, boolean stopAtEnd){
+        this(pathGroupName, pathIndex, Robot.drive, stopAtEnd);
     }
 
-    public PathPlannerCommand(String trajectoryName, Drivetrain drive, boolean isFirstPath, boolean stopAtEnd){
-        this(PathLoader.getTrajectory(trajectoryName), drive, isFirstPath, stopAtEnd); 
+    public PathPlannerCommand(String pathGroupName, int pathIndex, Drivetrain drive, boolean stopAtEnd){
+        this(PathLoader.getPathGroup(pathGroupName), pathIndex, drive, stopAtEnd); 
     }
-    public PathPlannerCommand(PathPlannerTrajectory trajectory, Drivetrain drive, boolean isFirstPath, boolean stopAtEnd){
+    public PathPlannerCommand(ArrayList<PathPlannerTrajectory> pathGroup, int pathIndex, Drivetrain drive, boolean stopAtEnd){
         m_drive = drive;
         addRequirements(m_drive);
+        if (pathIndex < 0 || pathIndex > pathGroup.size() - 1){
+            throw new IndexOutOfBoundsException("Path index out of range"); 
+        } 
+        PathPlannerTrajectory path = pathGroup.get(pathIndex);  
         addCommands(
-            (isFirstPath ? new InstantCommand(() -> m_drive.resetOdometry(trajectory.getInitialPose())) : new DoNothing()), 
+            (pathIndex == 0 ? new InstantCommand(() -> m_drive.resetOdometry(path.getInitialPose())) : new DoNothing()), 
             new PPRamseteCommand(
-                trajectory, 
+                path, 
                 m_drive::getPose, 
                 m_drive.getRamseteController(), 
                 m_drive.getKinematics(), 

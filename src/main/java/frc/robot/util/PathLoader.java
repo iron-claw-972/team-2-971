@@ -1,6 +1,7 @@
 package frc.robot.util;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.pathplanner.lib.PathConstraints;
@@ -12,9 +13,9 @@ import edu.wpi.first.wpilibj.Filesystem;
 import frc.robot.constants.Constants;
 
 public class PathLoader {
-  private static HashMap<String, PathPlannerTrajectory> trajectories = new HashMap<String, PathPlannerTrajectory>();
+  private static HashMap<String, ArrayList<PathPlannerTrajectory>> pathGroups = new HashMap<String, ArrayList<PathPlannerTrajectory>>();
 
-  public static void loadPaths() {
+  public static void loadPathGroups() {
     double totalTime = 0;
     File[] directoryListing = Filesystem.getDeployDirectory().toPath().resolve(Constants.auto.kPathsDirectory).toFile().listFiles();
     if (directoryListing != null) {
@@ -22,7 +23,7 @@ public class PathLoader {
         if (file.isFile() && file.getName().indexOf(".") != -1) {
           long startTime = System.nanoTime();
           String name = file.getName().substring(0, file.getName().indexOf("."));
-          trajectories.put(name, PathPlanner.loadPath(name, new PathConstraints(Constants.drive.kMaxDriveSpeed, Constants.drive.kMaxDriveAccel)));
+          pathGroups.put(name, PathPlanner.loadPathGroup(name, new PathConstraints(Constants.drive.kMaxDriveSpeed, Constants.drive.kMaxDriveAccel)));
           double time = (System.nanoTime() - startTime) / 1000000.0;
           totalTime += time;
           System.out.println("Processed file: " + file.getName() + ", took " + time + " milliseconds.");
@@ -37,7 +38,8 @@ public class PathLoader {
     System.out.println("File processing took a total of " + totalTime + " milliseconds");
   }
 
-  public static PathPlannerTrajectory getTrajectory(String trajectoryName) {
-    return trajectories.get(trajectoryName);
+  public static ArrayList<PathPlannerTrajectory> getPathGroup(String pathGroupName) {
+    return pathGroups.get(pathGroupName);
   }
+
 }

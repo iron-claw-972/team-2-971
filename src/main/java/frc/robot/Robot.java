@@ -35,7 +35,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    PathLoader.loadPaths();
+    PathLoader.loadPathGroups();
 
     drive.setDefaultCommand(new ArcadeDrive(drive));
     // m_drive.setDefaultCommand(new FFDrive(m_drive));
