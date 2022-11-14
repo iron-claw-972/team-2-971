@@ -17,7 +17,7 @@ public class ThreeDotAuto extends SequentialCommandGroup{
     public ThreeDotAuto(Drivetrain drive){
        addRequirements(drive);
        addCommands(
-           new PathPlannerCommand("ThreeDotAuto", 0, true)
+           new PathPlannerCommand("ThreeDotAuto", 0)
        );
    }
 

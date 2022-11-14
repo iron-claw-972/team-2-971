@@ -17,9 +17,7 @@ public class TwoDotAuto extends SequentialCommandGroup{
    public TwoDotAuto(Drivetrain drive){
        addRequirements(drive);
        addCommands(
-           new PathPlannerCommand("TwoDotAuto", 0, true)
+           new PathPlannerCommand("TwoDotAuto", 0)
        );
    }
-
-      
 }

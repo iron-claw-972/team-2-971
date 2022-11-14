@@ -12,7 +12,7 @@ public class OneDotAuto extends SequentialCommandGroup{
    public OneDotAuto(Drivetrain drive){
        addRequirements(drive);
        addCommands(
-           new PathPlannerCommand("OneDotAuto", 0, true)
+           new PathPlannerCommand("OneDotAuto", 0)
        );
    }
 

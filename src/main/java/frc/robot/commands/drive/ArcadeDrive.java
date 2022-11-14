@@ -1,12 +1,17 @@
 package frc.robot.commands.drive;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
 import frc.robot.controls.Driver;
 import frc.robot.subsystems.Drivetrain;
 
 public class ArcadeDrive extends CommandBase{
 
   Drivetrain m_drive;
+
+  public ArcadeDrive() {
+    this(Robot.drive);
+  }
   
   public ArcadeDrive(Drivetrain drive) {
     m_drive = drive;
