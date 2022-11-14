@@ -37,8 +37,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     PathLoader.loadPathGroups();
 
-    drive.setDefaultCommand(new ArcadeDrive());
-    // m_drive.setDefaultCommand(new FFDrive());
+    //drive.setDefaultCommand(new ArcadeDrive());
+     drive.setDefaultCommand(new FFDrive());
 
     // This is really annoying so it's disabled
     DriverStation.silenceJoystickConnectionWarning(true);

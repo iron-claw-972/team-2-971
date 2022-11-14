@@ -23,9 +23,9 @@ public class DriveConstants {
   public final int kRightMotorId = 34; // fx17
 
   // Left drive PID
-  public final double kLeftDriveP = 1;
-  public final double kLeftDriveI = 1;
-  public final double kLeftDriveD = 1;
+  public final double kLeftDriveP = 2.9689;
+  public final double kLeftDriveI = 0;
+  public final double kLeftDriveD = 0;
 
   // Right drive PID
   public final double kRightDriveP = kLeftDriveP;
@@ -33,11 +33,11 @@ public class DriveConstants {
   public final double kRightDriveD = kLeftDriveD;
 
   // Drive feedforward
-  public final double kSLinear = 1;
-  public final double kVLinear = 1;
-  public final double kALinear = 1;
+  public final double kSLinear = 0.5523;
+  public final double kVLinear = 2.6087;
+  public final double kALinear = 0.19688;
 
-  public final double kSAngular = 1;
-  public final double kVAngular = 1;
-  public final double kAAngular = 1;
+  public final double kSAngular = 0.57582;
+  public final double kVAngular = 8.9386;
+  public final double kAAngular = 1.1801;
 }

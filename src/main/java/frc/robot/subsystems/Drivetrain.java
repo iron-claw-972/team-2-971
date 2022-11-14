@@ -182,6 +182,7 @@ public class Drivetrain extends SubsystemBase {
     // Output PID+FF
     m_leftMotors.setVoltage(leftOutput + leftFeedforward);
     m_rightMotors.setVoltage(rightOutput + rightFeedforward);
+    m_dDrive.feed(); 
   }
 
   public void feedForwardDrive(double throttle, double turn) {
