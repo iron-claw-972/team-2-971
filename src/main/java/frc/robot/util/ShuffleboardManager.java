@@ -9,6 +9,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.robot.commands.auto.routines.OneDotAuto;
+import frc.robot.commands.auto.routines.TestAuto;
+import frc.robot.commands.auto.routines.ThreeDotAuto;
+import frc.robot.commands.auto.routines.TwoDotAuto;
 
 public class ShuffleboardManager {
 
@@ -33,8 +36,12 @@ public class ShuffleboardManager {
   }
 
   public void chooserUpdate() {
-    m_autoCommand.addOption("Do Nothing", new PrintCommand("This will do nothing!"));
+    m_autoCommand.setDefaultOption("Do Nothing", new PrintCommand("This will do nothing!"));
+    m_autoCommand.addOption("TestAuto", new TestAuto()); 
     m_autoCommand.addOption("OneDotAuto", new OneDotAuto()); 
+    m_autoCommand.addOption("TwoDotAuto", new TwoDotAuto());
+    m_autoCommand.addOption("ThreeDotAuto", new ThreeDotAuto());    
+
   }
 
   public void loadCommandSchedulerShuffleboard(){
