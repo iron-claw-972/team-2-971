@@ -37,14 +37,14 @@ public class PathPlannerCommand extends SequentialCommandGroup{
     }
 
     public PathPlannerCommand(PathPlannerTrajectory path){
-      this(new ArrayList<PathPlannerTrajectory>(Arrays.asList(path)), 0, Robot.drive);
+      this(new ArrayList<PathPlannerTrajectory>(Arrays.asList(path)), 0, Robot.drive, false);
     }
 
     public PathPlannerCommand(String pathGroupName, int pathIndex, Drivetrain drive){
-        this(PathLoader.getPathGroup(pathGroupName), pathIndex, drive); 
+        this(PathLoader.getPathGroup(pathGroupName), pathIndex, drive, true); 
     }
 
-    public PathPlannerCommand(ArrayList<PathPlannerTrajectory> pathGroup, int pathIndex, Drivetrain drive){
+    public PathPlannerCommand(ArrayList<PathPlannerTrajectory> pathGroup, int pathIndex, Drivetrain drive, boolean resetPose){
         m_drive = drive;
         addRequirements(m_drive);
         if (pathIndex < 0 || pathIndex > pathGroup.size() - 1){
@@ -52,7 +52,7 @@ public class PathPlannerCommand extends SequentialCommandGroup{
         } 
         PathPlannerTrajectory path = pathGroup.get(pathIndex);  
         addCommands(
-            (pathIndex == 0 && DriverStation.isAutonomousEnabled() ? new InstantCommand(() -> m_drive.resetOdometry(path.getInitialPose())) : new DoNothing()), 
+            (pathIndex == 0 && resetPose ? new InstantCommand(() -> m_drive.resetOdometry(path.getInitialPose())) : new DoNothing()), 
             new PPRamseteCommand(
                 path, 
                 m_drive::getPose, 
