@@ -23,7 +23,7 @@ public class PathLoader {
         if (file.isFile() && file.getName().indexOf(".") != -1) {
           long startTime = System.nanoTime();
           String name = file.getName().substring(0, file.getName().indexOf("."));
-          pathGroups.put(name, PathPlanner.loadPathGroup(name, new PathConstraints(Constants.drive.kMaxDriveSpeed, Constants.drive.kMaxDriveAccel)));
+          pathGroups.put(name, PathPlanner.loadPathGroup(name, new PathConstraints(Constants.auto.kMaxAutoSpeed, Constants.auto.kMaxAutoAccel)));
           double time = (System.nanoTime() - startTime) / 1000000.0;
           totalTime += time;
           System.out.println("Processed file: " + file.getName() + ", took " + time + " milliseconds.");

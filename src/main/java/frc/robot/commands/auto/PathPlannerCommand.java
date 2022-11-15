@@ -29,7 +29,7 @@ public class PathPlannerCommand extends SequentialCommandGroup{
 
     public PathPlannerCommand(ArrayList<PathPoint> waypoints) {
       this(PathPlanner.generatePath(
-        new PathConstraints(Constants.drive.kMaxDriveSpeed, Constants.drive.kMaxDriveAccel),
+        new PathConstraints(Constants.auto.kMaxAutoSpeed, Constants.auto.kMaxAutoAccel),
         waypoints.get(0),
         waypoints.get(1),
         (PathPoint[]) Arrays.copyOfRange(waypoints.toArray(), 2, waypoints.size())
@@ -54,7 +54,7 @@ public class PathPlannerCommand extends SequentialCommandGroup{
         addCommands(
             (pathIndex == 0 && resetPose ? new InstantCommand(() -> m_drive.resetOdometry(path.getInitialPose())) : new DoNothing()), 
             new PPRamseteCommand(
-                path, 
+                path,
                 m_drive::getPose, 
                 m_drive.getRamseteController(), 
                 m_drive.getKinematics(), 

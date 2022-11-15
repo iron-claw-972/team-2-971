@@ -132,7 +132,7 @@ public class Motors {
   }
 
   public static WPI_TalonFX createTalonFX(int id, NeutralMode neutralMode, boolean enableSupplyCurrentLimit, double supplyCurrentLimit, double supplyTriggerThreshold, double supplyTriggerDuration) {
-    return createTalonFX(id, neutralMode, true, enableSupplyCurrentLimit, supplyCurrentLimit, supplyTriggerThreshold, supplyTriggerDuration);
+    return createTalonFX(id, neutralMode, false, enableSupplyCurrentLimit, supplyCurrentLimit, supplyTriggerThreshold, supplyTriggerDuration);
   }
 
   public static WPI_TalonFX createTalonFX(int id, NeutralMode neutralMode) {
