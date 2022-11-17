@@ -32,6 +32,7 @@ import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -125,6 +126,7 @@ public class Drivetrain extends SubsystemBase {
 
     // Drivetrain setup
     m_dDrive = new DifferentialDrive(m_leftMotors, m_rightMotors);
+    SmartDashboard.putData(m_dDrive);
 
     // Odometry setup
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
