@@ -229,6 +229,17 @@ public class Drivetrain extends SubsystemBase {
   public Pose2d getPose() {
     return m_odometry.getPoseMeters();
   }
+  public double getPoseX() {
+    return getPose().getX();
+  }
+
+  public double getPoseY() {
+    return getPose().getY();
+  }
+
+  public double getPoseRotation() {
+    return getPose().getRotation().getDegrees();
+  }
 
   public void arcadeDrive(double throttle, double turn){
     m_dDrive.arcadeDrive(throttle, turn);
@@ -238,6 +249,14 @@ public class Drivetrain extends SubsystemBase {
     m_leftMotors.setVoltage(leftVolts);
     m_rightMotors.setVoltage(rightVolts);
     m_dDrive.feed();
+  }
+
+  public double getDriveSpeed(){
+    return (m_leftEncoder.getRate() + m_rightEncoder.getRate())/2;
+  }
+
+  public double getNavXPos(){
+    return m_gyro.getRotation2d().getDegrees();
   }
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds(){
