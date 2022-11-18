@@ -14,6 +14,7 @@ import frc.robot.controls.Driver;
 import frc.robot.controls.Operator;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Singulator;
+import frc.robot.subsystems.Intake;
 import frc.robot.util.PathLoader;
 import frc.robot.util.ShuffleboardManager;
 
@@ -27,6 +28,7 @@ public class Robot extends TimedRobot {
   private Command m_autoCommand;
   public static Drivetrain drive = new Drivetrain();
   public static Singulator singulator = new Singulator();
+  public static Intake intake = new Intake();
   public static ShuffleboardManager shuffleboard = new ShuffleboardManager();
 
   /**
