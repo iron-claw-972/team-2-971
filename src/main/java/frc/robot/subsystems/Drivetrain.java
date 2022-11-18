@@ -165,6 +165,18 @@ public class Drivetrain extends SubsystemBase {
     return ramseteController; 
   }
 
+  public SimpleMotorFeedforward getDriveFF() {
+    return m_driveFF;
+  }
+
+  public PIDController getLeftDrivePID() {
+    return m_leftDrivePID;
+  }
+
+  public PIDController getRightDrivePID() {
+    return m_rightDrivePID;
+  }
+
   public void resetGyro() {
     m_gyro.reset();
   }

@@ -23,14 +23,14 @@ public class DriveConstants {
   public final int kRightMotorId = 34; // fx17
 
   // Left drive PID
-  public final double kLeftDriveP = 2.9689;
+  public final double kLeftDriveP = 2.2807;
   public final double kLeftDriveI = 0;
   public final double kLeftDriveD = 0;
 
   // Right drive PID
-  public final double kRightDriveP = kLeftDriveP;
-  public final double kRightDriveI = kLeftDriveI;
-  public final double kRightDriveD = kLeftDriveD;
+  public final double kRightDriveP = 2.139;
+  public final double kRightDriveI = 0;
+  public final double kRightDriveD = 0;
 
   // Drive feedforward
   public final double kSLinear = 0.5523;
