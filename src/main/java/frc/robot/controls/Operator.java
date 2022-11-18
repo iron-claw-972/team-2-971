@@ -8,6 +8,7 @@ public class Operator {
 
   public static void configureControls() {
     // operator.get(Button.A).whenPressed(new Singulate(Robot.m_singulator));
+    // operator.get(Button.B).whenPressed(new IntakeBall(Robot.m_intake));
   }
 
 }
