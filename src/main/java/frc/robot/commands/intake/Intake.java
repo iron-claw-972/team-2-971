@@ -14,7 +14,7 @@ public class Intake extends CommandBase{
 
   public Intake(Intake subsystem){
     m_intake = subsystem;
-    addRequirements(m_singulator);
+    addRequirements(m_intake);
   }
   
   @Override
