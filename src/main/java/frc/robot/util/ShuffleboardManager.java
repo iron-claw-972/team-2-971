@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
+import frc.robot.commands.auto.routines.AutoTest;
 import frc.robot.commands.auto.routines.OneDotAuto;
 import frc.robot.commands.auto.routines.TestAuto;
 import frc.robot.commands.auto.routines.ThreeDotAuto;
@@ -40,7 +41,8 @@ public class ShuffleboardManager {
     m_autoCommand.addOption("TestAuto", new TestAuto()); 
     m_autoCommand.addOption("OneDotAuto", new OneDotAuto()); 
     m_autoCommand.addOption("TwoDotAuto", new TwoDotAuto());
-    m_autoCommand.addOption("ThreeDotAuto", new ThreeDotAuto());    
+    m_autoCommand.addOption("ThreeDotAuto", new ThreeDotAuto()); 
+    m_autoCommand.addOption("AutoTest", new AutoTest());    
 
   }
 
