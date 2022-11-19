@@ -21,3 +21,8 @@
 ## AutoSim setup
 - Open Auto Chooser by clicking on NetworkTables -> Shuffleboard -> Auto -> Auto Chooser
 - Select desired auto in dropdown
+
+## PathPlanner setup
+- Select Robot Project and select the "team-2-971" folder
+- Create field called Cruise Control, select field.png from assets/, and set Pixels per Meter to 185.433071
+- Set Robot Width to 0.56 and Robot Length to 0.69

@@ -2,7 +2,7 @@ package frc.robot.controls;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import frc.robot.commands.DoNothing;
+import frc.robot.commands.drive.AlignToPlant;
 import frc.robot.constants.Constants;
 import lib.controllers.GameController;
 import lib.controllers.GameController.Axis;
@@ -15,7 +15,8 @@ public class Driver {
   private static SlewRateLimiter slewTurn = new SlewRateLimiter(Constants.drive.kDriveSlewRate);
 
   public static void configureControls() {
-    // driver.get(Button.A).whenPressed(new DoNothing());
+    driver.get(Button.Y).whenPressed(new AlignToPlant(true));
+    driver.get(Button.A).whenPressed(new AlignToPlant(false));
   }
 
   public static double getThrottleValue() {

@@ -2,7 +2,6 @@ package frc.robot.commands.auto;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
@@ -10,11 +9,8 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.PathPoint;
 import com.pathplanner.lib.commands.PPRamseteCommand;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Robot;
 import frc.robot.commands.DoNothing;
@@ -34,7 +30,7 @@ public class PathPlannerCommand extends SequentialCommandGroup{
         new PathConstraints(Constants.auto.kMaxAutoSpeed, Constants.auto.kMaxAutoAccel),
         waypoints.get(0),
         waypoints.get(1),
-        (PathPoint[]) Arrays.copyOfRange(waypoints.toArray(), 2, waypoints.size())
+        waypoints.subList(2, waypoints.size()).toArray(PathPoint[]::new)
       ));
     }
 

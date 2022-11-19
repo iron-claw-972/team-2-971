@@ -8,20 +8,10 @@ import com.pathplanner.lib.PathPoint;
 import frc.robot.util.Odometry;
 
 public class FieldConstants {
-  public final ArrayList<PathPoint> kPlant1Waypoints = new ArrayList<PathPoint>(List.of(
-    Odometry.createPathPoint(0, 0, 0),
-    Odometry.createPathPoint(0, 0, 0)
+  public final ArrayList<PathPoint> kTopPlantsWaypoints = new ArrayList<PathPoint>(List.of(
+    Odometry.createPathPoint(0.61, 4.59, 180)
   ));
-  public final ArrayList<PathPoint> kPlant2Waypoints = new ArrayList<PathPoint>(List.of(
-    Odometry.createPathPoint(0, 0, 0),
-    Odometry.createPathPoint(0, 0, 0)
-  ));
-  public final ArrayList<PathPoint> kPlant3Waypoints = new ArrayList<PathPoint>(List.of(
-    Odometry.createPathPoint(0, 0, 0),
-    Odometry.createPathPoint(0, 0, 0)
-  ));
-  public final ArrayList<PathPoint> kPlant4Waypoints = new ArrayList<PathPoint>(List.of(
-    Odometry.createPathPoint(0, 0, 0),
-    Odometry.createPathPoint(0, 0, 0)
+  public final ArrayList<PathPoint> kBottomPlantsWaypoints = new ArrayList<PathPoint>(List.of(
+    Odometry.createPathPoint(0.61, 1.51, 180)
   ));
 }
