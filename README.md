@@ -1,5 +1,23 @@
-# Code-Structure-2023
+# Team 2's code for CC6
 
-[View Project Board Here](https://github.com/iron-claw-972/Code-Structure-2023/projects/1)
+## FieldSim setup
+- Select Field2d in NetworkTables -> SmartDashboard -> Field
+- Right-click on blue section of the Field window
+- Edit name to "Cruise Control"
+- Set units to "meters"
+- Click Choose Image and select image in assets/field.png
+- Set Field Width to 7.620 and Field Height to 6.096
+- Set Style to "Box/Image"
+- Set Width to 0.559 and Length to 0.686
+- Click Close
 
-Code Structure for our future 2023 repository. Need to make several decisions about our code process and structure.
+## KeyboardSim setup
+- Drag Keyboard0 from System Joysticks window to Joystick[0] in Joysticks window
+- Right-click Keyboard0 in System Joysticks window and click Keyboard 0 Settings
+- Increase Axes count to 5
+- Under Axis 1, set key for Increase to "s" and Decrease to "w"
+- Under Axis 4, set key for Increase to "d" and Decrease to "a"
+
+## AutoSim setup
+- Open Auto Chooser by clicking on NetworkTables -> Shuffleboard -> Auto -> Auto Chooser
+- Select desired auto in dropdown

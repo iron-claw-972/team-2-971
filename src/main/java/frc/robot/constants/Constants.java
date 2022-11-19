@@ -1,7 +1,5 @@
 package frc.robot.constants;
 
-import frc.robot.subsystems.Intake;
-
 public final class Constants {
   public static final double kMaxVoltage = 12.0;
 

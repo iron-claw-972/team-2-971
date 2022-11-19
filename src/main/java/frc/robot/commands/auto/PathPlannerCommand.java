@@ -12,6 +12,7 @@ import com.pathplanner.lib.commands.PPRamseteCommand;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -53,8 +54,7 @@ public class PathPlannerCommand extends SequentialCommandGroup{
         } 
         PathPlannerTrajectory path = pathGroup.get(pathIndex);  
         addCommands(
-            (pathIndex == 0 && resetPose ? new InstantCommand(() -> m_drive.resetOdometry(path.getInitialPose())) : new DoNothing()),
-            new PrintCommand("Number of paths: " + pathGroup.size()),
+            (pathIndex == 0 && resetPose && RobotBase.isReal() ? new InstantCommand(() -> m_drive.resetOdometry(path.getInitialPose())) : new DoNothing()),
             new PPRamseteCommand(
                 path,
                 m_drive::getPose, 

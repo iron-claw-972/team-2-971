@@ -29,6 +29,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.numbers.N2;
 import edu.wpi.first.math.system.LinearSystem;
 import edu.wpi.first.math.system.plant.LinearSystemId;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -73,10 +74,11 @@ public class Drivetrain extends SubsystemBase {
   private final SimpleMotorFeedforward m_driveFF = new SimpleMotorFeedforward(Constants.drive.kSLinear, Constants.drive.kVLinear);
   private final RamseteController ramseteController = new RamseteController(Constants.auto.kRamseteB, Constants.auto.kRamseteZeta); 
 
+  private final Field2d m_field = new Field2d();
+
   // Simulation
   private final TalonEncoderSim m_leftEncoderSim;
   private final TalonEncoderSim m_rightEncoderSim;
-  private final Field2d m_fieldSim = new Field2d();
   private final LinearSystem<N2, N2, N2> m_driveSystem = LinearSystemId.identifyDrivetrainSystem(
     Constants.drive.kVLinear,
     Constants.drive.kALinear,
@@ -109,8 +111,13 @@ public class Drivetrain extends SubsystemBase {
     m_leftMotors = new PhoenixMotorControllerGroup(m_leftMotor1);
     m_rightMotors = new PhoenixMotorControllerGroup(m_rightMotor1);
 
-    m_leftMotors.setInverted(true); // clockwise
-    m_rightMotors.setInverted(false); // counterclockwise
+    if (RobotBase.isSimulation()) {
+      m_leftMotors.setInverted(false);
+      m_rightMotors.setInverted(false);
+    } else {
+      m_leftMotors.setInverted(false);
+      m_rightMotors.setInverted(true);
+    }
 
     // Encoder setup
     m_leftEncoder = new TalonEncoder(m_leftMotor1);
@@ -132,20 +139,20 @@ public class Drivetrain extends SubsystemBase {
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
 
     // Place field on Shuffleboard
-    SmartDashboard.putData("Field", m_fieldSim);
+    SmartDashboard.putData("Field", m_field);
   }
 
   @Override
   public void periodic() {
     updateOdometry();
-    m_fieldSim.setRobotPose(m_odometry.getPoseMeters());
+    m_field.setRobotPose(getPose());
   }
 
   @Override
   public void simulationPeriodic() {
     m_driveSim.setInputs(
-      m_leftMotors.get() * RobotController.getInputVoltage(),
-      m_rightMotors.get() * RobotController.getInputVoltage()
+      m_leftMotors.get() * RobotController.getBatteryVoltage(),
+      m_rightMotors.get() * RobotController.getBatteryVoltage()
     );
     m_driveSim.update(0.02);
 
