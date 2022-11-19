@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.constants.Constants;
 import frc.robot.util.Motors;
 
 
@@ -20,7 +21,7 @@ public class Intake extends SubsystemBase {
   public CANSparkMax m_motor;
 
   public Intake() {
-    this(Motors.createSparkMAX(0, MotorType.kBrushless, IdleMode.kCoast));
+    this(Motors.createSparkMAX(Constants.intake.kIntakeMotor, MotorType.kBrushless, IdleMode.kCoast));
   }
 
   public Intake(CANSparkMax motor) {
