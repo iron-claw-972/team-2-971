@@ -40,7 +40,7 @@ public class Robot extends TimedRobot {
     PathLoader.loadPathGroups();
 
     //drive.setDefaultCommand(new ArcadeDrive());
-     drive.setDefaultCommand(new FFDrive());
+    drive.setDefaultCommand(new FFDrive());
 
     // This is really annoying so it's disabled
     DriverStation.silenceJoystickConnectionWarning(true);

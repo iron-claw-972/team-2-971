@@ -31,7 +31,7 @@ public class ShuffleboardManager {
   
   public void setup() {
     LiveWindow.disableAllTelemetry(); // LiveWindow is causing periodic loop overruns
-    initAutoChooser();
+    setupAutoChooser();
     loadAllTabs();
   }
 
@@ -39,7 +39,7 @@ public class ShuffleboardManager {
     return m_autoCommand.getSelected();
   }
 
-  public void initAutoChooser() {
+  public void setupAutoChooser() {
     m_autoCommand.setDefaultOption("Do Nothing", new PrintCommand("This will do nothing!"));
     m_autoCommand.addOption("TestAuto", new TestAuto()); 
     m_autoCommand.addOption("OneDotAuto", new OneDotAuto()); 

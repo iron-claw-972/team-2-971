@@ -6,7 +6,7 @@ import frc.robot.subsystems.Intake;
 
 public class IntakeBall extends CommandBase{
 
-  Intake m_intake;
+  private Intake m_intake;
   
   public IntakeBall(){
     this(Robot.intake);

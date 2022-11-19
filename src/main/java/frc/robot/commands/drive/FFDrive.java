@@ -8,7 +8,7 @@ import frc.robot.subsystems.Drivetrain;
 
 public class FFDrive extends CommandBase{
 
-  Drivetrain m_drive;
+  private Drivetrain m_drive;
 
   public FFDrive() {
     this(Robot.drive);

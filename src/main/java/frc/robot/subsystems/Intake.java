@@ -18,7 +18,7 @@ import frc.robot.util.Motors;
 
 public class Intake extends SubsystemBase {
 
-  public CANSparkMax m_motor;
+  private CANSparkMax m_motor;
 
   public Intake() {
     this(Motors.createSparkMAX(Constants.intake.kIntakeMotor, MotorType.kBrushless, IdleMode.kCoast));

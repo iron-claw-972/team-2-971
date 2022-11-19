@@ -17,7 +17,7 @@ import frc.robot.util.Motors;
 
 public class Singulator extends SubsystemBase {
 
-  public CANSparkMax m_motor;
+  private CANSparkMax m_motor;
 
   public Singulator() {
     this(Motors.createSparkMAX(Constants.singulator.kSingulatorMotor, MotorType.kBrushless, IdleMode.kCoast));

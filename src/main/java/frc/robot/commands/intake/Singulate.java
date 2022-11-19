@@ -6,7 +6,7 @@ import frc.robot.subsystems.Singulator;
 
 public class Singulate extends CommandBase{
 
-  Singulator m_singulator;
+  private Singulator m_singulator;
   
   public Singulate(){
     this(Robot.singulator);
