@@ -14,8 +14,8 @@ public class DriveConstants {
   public final double kGearRatio = (double) 62 / 8; // # driven gear teeth / # driver gear teeth
   public final DCMotor kGearbox = DCMotor.getFalcon500(1);
 
-  public final double kDriveSlewRate = 3; // 1/X seconds from 0 to 1
-  public final double kTurnSlewRate = 3; // 1/X seconds from 0 to 1
+  public final double kDriveSlewRate = 3; // 1/X seconds to go from 0 to 1
+  public final double kTurnSlewRate = 3; // 1/X seconds to go from 0 to 1
 
   public final double kDeadband = 0.05;//0.02 // don't run motors when less than X power commanded
 

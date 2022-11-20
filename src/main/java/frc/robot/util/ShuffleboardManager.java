@@ -10,11 +10,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.robot.Robot;
-import frc.robot.commands.auto.routines.AutoTest;
-import frc.robot.commands.auto.routines.OneDotAuto;
-import frc.robot.commands.auto.routines.TestAuto;
-import frc.robot.commands.auto.routines.ThreeDotAuto;
-import frc.robot.commands.auto.routines.TwoDotAuto;
+import frc.robot.commands.auto.PathPlannerCommand;
+import frc.robot.commands.auto.routines.*;
 
 public class ShuffleboardManager {
 
@@ -41,13 +38,12 @@ public class ShuffleboardManager {
 
   public void setupAutoChooser() {
     m_autoCommand.setDefaultOption("Do Nothing", new PrintCommand("This will do nothing!"));
-    m_autoCommand.addOption("TestAuto", new TestAuto()); 
-    m_autoCommand.addOption("OneDotAuto", new OneDotAuto()); 
-    m_autoCommand.addOption("TwoDotAuto", new TwoDotAuto());
-    m_autoCommand.addOption("ThreeDotAuto", new ThreeDotAuto()); 
-    m_autoCommand.addOption("AutoTest", new AutoTest());    
-
+    m_autoCommand.addOption("TestAuto", new PathPlannerCommand("TestAuto", 0)); 
+    m_autoCommand.addOption("OneDotAuto", new PathPlannerCommand("OneDotAuto", 0)); 
+    m_autoCommand.addOption("TwoDotAuto", new PathPlannerCommand("TwoDotAuto", 0)); 
+    m_autoCommand.addOption("ThreeDotAuto", new PathPlannerCommand("ThreeDotAuto", 0)); 
   }
+
   public void loadAllTabs() {
     // put subsystem shuffleboard things in here
     loadMainTab();
@@ -56,24 +52,29 @@ public class ShuffleboardManager {
     loadIntakeTab();
     loadSingulatorTab();
   }
+
   public void loadMainTab(){
     m_mainTab.addBoolean("Is Teleop", DriverStation::isTeleop);
     m_mainTab.addNumber("Time Left", DriverStation::getMatchTime);
     
   }
+
   public void loadAutoTab(){
     m_autoTab.add("Auto Chooser", m_autoCommand);
     m_autoTab.addNumber("X", Robot.drive::getPoseX);
     m_autoTab.addNumber("Y", Robot.drive::getPoseX);
     m_autoTab.addNumber("Rotation", Robot.drive::getPoseRotation);
   }
+
   public void loadDriveTab(){
     m_mainTab.addNumber("Drivetrain Speed", Robot.drive::getDriveSpeed);
     m_autoTab.addNumber("NavX Position", Robot.drive::getGyroRotation);
   }
+
   public void loadIntakeTab(){
 
   }
+
   public void loadSingulatorTab(){
 
   }
