@@ -54,7 +54,7 @@ public class Drivetrain extends SubsystemBase {
 
   private final DifferentialDrive m_dDrive;
 
-  private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
+  private final AHRS m_gyro;
 
   private final PIDController m_leftDrivePID = new PIDController(
     Constants.drive.kLeftDriveP,
@@ -101,8 +101,18 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public Drivetrain(WPI_TalonFX leftMotor1, WPI_TalonFX rightMotor1) {
-    resetGyro();
+    this(leftMotor1, rightMotor1, new AHRS(SPI.Port.kMXP), new DifferentialDrive(leftMotor1, rightMotor1));
+  }
 
+  public Drivetrain(WPI_TalonFX leftMotor1, WPI_TalonFX rightMotor1, AHRS gyro) {
+    this(leftMotor1, rightMotor1, gyro, new DifferentialDrive(leftMotor1, rightMotor1));
+  }
+
+  public Drivetrain(WPI_TalonFX leftMotor1, WPI_TalonFX rightMotor1, DifferentialDrive dDrive) {
+    this(leftMotor1, rightMotor1, new AHRS(SPI.Port.kMXP), dDrive);
+  }
+
+  public Drivetrain(WPI_TalonFX leftMotor1, WPI_TalonFX rightMotor1, AHRS gyro, DifferentialDrive dDrive) {
     // Motor setup
     m_leftMotor1 = leftMotor1;
     m_rightMotor1 = rightMotor1;
@@ -130,8 +140,12 @@ public class Drivetrain extends SubsystemBase {
 
     resetEncoders();
 
+    // Gyro setup
+    m_gyro = gyro;
+    resetGyro();
+
     // Drivetrain setup
-    m_dDrive = new DifferentialDrive(m_leftMotors, m_rightMotors);
+    m_dDrive = dDrive;
     SmartDashboard.putData(m_dDrive);
 
     // Odometry setup
@@ -261,7 +275,7 @@ public class Drivetrain extends SubsystemBase {
     return (m_leftEncoder.getRate() + m_rightEncoder.getRate())/2;
   }
 
-  public double getNavXPos(){
+  public double getGyroRotation(){
     return m_gyro.getRotation2d().getDegrees();
   }
 

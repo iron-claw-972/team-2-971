@@ -1,4 +1,4 @@
-package frc.robot.commands.intake;
+package frc.robot.commands.singulator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;

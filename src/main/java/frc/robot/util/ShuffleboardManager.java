@@ -69,7 +69,7 @@ public class ShuffleboardManager {
   }
   public void loadDriveTab(){
     m_mainTab.addNumber("Drivetrain Speed", Robot.drive::getDriveSpeed);
-    m_autoTab.addNumber("NavX Position", Robot.drive::getNavXPos);
+    m_autoTab.addNumber("NavX Position", Robot.drive::getGyroRotation);
   }
   public void loadIntakeTab(){
 
