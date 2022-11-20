@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.pathplanner.lib.PathPoint;
 
-import frc.robot.util.Odometry;
+import lib.Odometry;
 
 public class FieldConstants {
   public final ArrayList<PathPoint> kTopPlantsWaypoints = new ArrayList<PathPoint>(List.of(

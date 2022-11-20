@@ -16,7 +16,7 @@ import frc.robot.Robot;
 import frc.robot.commands.DoNothing;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.util.PathLoader;
+import lib.PathLoader;
 
 public class PathPlannerCommand extends SequentialCommandGroup{
     private Drivetrain m_drive;  

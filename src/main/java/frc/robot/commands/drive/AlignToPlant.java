@@ -9,7 +9,7 @@ import frc.robot.Robot;
 import frc.robot.commands.auto.PathPlannerCommand;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.util.Odometry;
+import lib.Odometry;
 
 public class AlignToPlant extends SequentialCommandGroup {
 

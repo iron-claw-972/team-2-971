@@ -14,8 +14,8 @@ import frc.robot.controls.Operator;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Singulator;
 import frc.robot.subsystems.Intake;
-import frc.robot.util.PathLoader;
 import frc.robot.util.ShuffleboardManager;
+import lib.PathLoader;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
