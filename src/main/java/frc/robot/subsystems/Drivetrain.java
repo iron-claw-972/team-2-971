@@ -10,10 +10,14 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
+import org.photonvision.PhotonCamera;
+import org.photonvision.targeting.PhotonPipelineResult;
+
 import ctre_shims.PhoenixMotorControllerGroup;
 import ctre_shims.TalonEncoder;
 import ctre_shims.TalonEncoderSim;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.hal.SimDouble;
@@ -55,6 +59,9 @@ public class Drivetrain extends SubsystemBase {
   private final DifferentialDrive m_dDrive;
 
   private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
+  private final PhotonCamera camera = new PhotonCamera(cameraNameHere);
+
+
 
   private final PIDController m_leftDrivePID = new PIDController(
     Constants.drive.kLeftDriveP,
@@ -240,7 +247,21 @@ public class Drivetrain extends SubsystemBase {
     m_dDrive.feed();
   }
 
+  public void tankDrivePercentOutput(double leftPower, double rightPower){
+    m_leftMotor1.set(ControlMode.PercentOutput, 0.25); 
+    m_rightMotor1.set(ControlMode.PercentOutput, 0.25); 
+
+    
+
+
+  }
+
   public DifferentialDriveWheelSpeeds getWheelSpeeds(){
     return new DifferentialDriveWheelSpeeds(m_leftEncoder.getRate(), m_rightEncoder.getRate());
+  }
+
+  public PhotonPipelineResult getLatestPipelineResult(){
+    return camera.getLatestResult(); 
+
   }
 }
