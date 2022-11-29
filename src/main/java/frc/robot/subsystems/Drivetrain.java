@@ -95,8 +95,8 @@ public class Drivetrain extends SubsystemBase {
   
   public Drivetrain() {
     this(
-      Motors.createTalonFX(Constants.drive.kLeftMotorId, NeutralMode.Brake),
-      Motors.createTalonFX(Constants.drive.kRightMotorId, NeutralMode.Brake)
+      Motors.createTalonFX(Constants.drive.kLeftMotorId, NeutralMode.Brake, true, 30, 40, 1),
+      Motors.createTalonFX(Constants.drive.kRightMotorId, NeutralMode.Brake, true, 30, 40, 1)
     );
   }
 
