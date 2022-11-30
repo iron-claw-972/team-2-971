@@ -20,7 +20,8 @@ public class ShuffleboardManager {
   ShuffleboardTab m_autoTab = Shuffleboard.getTab("Auto");
   ShuffleboardTab m_driveTab = Shuffleboard.getTab("Drive");
   ShuffleboardTab m_intakeTab = Shuffleboard.getTab("Intake");
-  ShuffleboardTab m_SingulatorTab = Shuffleboard.getTab("Singulator");
+  ShuffleboardTab m_singulatorTab = Shuffleboard.getTab("Singulator");
+  ShuffleboardTab m_visionTab = Shuffleboard.getTab("Vision");
 
 
   NetworkTableEntry m_commandScheduler = m_mainTab.add("Command Scheduler", "NULL").getEntry();
@@ -50,6 +51,7 @@ public class ShuffleboardManager {
     loadDriveTab();
     loadIntakeTab();
     loadSingulatorTab();
+    loadVisionTab();
   }
 
   public void loadMainTab(){
@@ -76,6 +78,13 @@ public class ShuffleboardManager {
 
   public void loadSingulatorTab(){
 
+  }
+
+  public void loadVisionTab() {
+    m_visionTab.addNumber("Yaw (deg)", Robot.vision::getTargetYaw);
+    m_visionTab.addNumber("ID", Robot.vision::getTargetId);
+    m_visionTab.addNumber("Latency (ms)", Robot.vision::getLatency);
+    m_visionTab.addNumber("Distance (m)", Robot.vision::getTargetDistance);
   }
 
 

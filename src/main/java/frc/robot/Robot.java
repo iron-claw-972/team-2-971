@@ -12,8 +12,9 @@ import frc.robot.commands.drive.FFDrive;
 import frc.robot.controls.Driver;
 import frc.robot.controls.Operator;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Singulator;
-import frc.robot.subsystems.Intake;
+// import frc.robot.subsystems.Singulator;
+import frc.robot.subsystems.Vision;
+// import frc.robot.subsystems.Intake;
 import frc.robot.util.ShuffleboardManager;
 import lib.PathLoader;
 
@@ -26,9 +27,10 @@ import lib.PathLoader;
 public class Robot extends TimedRobot {
   private Command m_autoCommand;
   public static Drivetrain drive = new Drivetrain();
-  public static Singulator singulator = new Singulator();
-  public static Intake intake = new Intake();
+  // public static Singulator singulator = new Singulator();
+  // public static Intake intake = new Intake();
   public static ShuffleboardManager shuffleboard = new ShuffleboardManager();
+  public static Vision vision = new Vision();
 
   /**
    * This function is run when the robot is first started up and should be used for any
