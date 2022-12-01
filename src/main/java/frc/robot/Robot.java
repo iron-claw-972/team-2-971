@@ -32,7 +32,7 @@ public class Robot extends TimedRobot {
   public static Singulator singulator = new Singulator();
   public static Intake intake = new Intake();
   public static ShuffleboardManager shuffleboard = new ShuffleboardManager();
-  public static PIDController pidControllerAprilTags = new PIDController(kp, ki, kd); 
+  public static PIDController pidControllerAprilTags = new PIDController(1.0, 0, 0); 
 
   /**
    * This function is run when the robot is first started up and should be used for any

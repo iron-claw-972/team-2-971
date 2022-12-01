@@ -11,7 +11,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
 import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonUtils;
 import org.photonvision.targeting.PhotonPipelineResult;
+import org.photonvision.targeting.PhotonTrackedTarget;
 
 import ctre_shims.PhoenixMotorControllerGroup;
 import ctre_shims.TalonEncoder;
@@ -25,7 +27,9 @@ import edu.wpi.first.hal.simulation.SimDeviceDataJNI;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -35,6 +39,7 @@ import edu.wpi.first.math.system.LinearSystem;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
@@ -59,7 +64,7 @@ public class Drivetrain extends SubsystemBase {
   private final DifferentialDrive m_dDrive;
 
   private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
-  private final PhotonCamera camera = new PhotonCamera(cameraNameHere);
+  private final PhotonCamera camera = new PhotonCamera("Microsoft_LifeCam_HD-3000");
 
 
 
@@ -248,12 +253,8 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void tankDrivePercentOutput(double leftPower, double rightPower){
-    m_leftMotor1.set(ControlMode.PercentOutput, 0.25); 
-    m_rightMotor1.set(ControlMode.PercentOutput, 0.25); 
-
-    
-
-
+    m_leftMotor1.set(ControlMode.PercentOutput, 0.25);
+    m_rightMotor1.set(ControlMode.PercentOutput, 0.25);
   }
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds(){
@@ -262,6 +263,5 @@ public class Drivetrain extends SubsystemBase {
 
   public PhotonPipelineResult getLatestPipelineResult(){
     return camera.getLatestResult(); 
-
   }
 }

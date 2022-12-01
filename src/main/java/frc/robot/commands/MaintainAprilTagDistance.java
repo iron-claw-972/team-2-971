@@ -47,13 +47,13 @@ public class MaintainAprilTagDistance extends CommandBase {
         double range =
         PhotonUtils.calculateDistanceToTargetMeters(
                 //fill in these values
-                CAMERA_HEIGHT_METERS, 
-                TARGET_HEIGHT_METERS,
-                CAMERA_PITCH_RADIANS,
+                Units.inchesToMeters(5.125), 
+                Units.inchesToMeters(15.5), // if this doesn't work put in the actual values in meters
+                0,//PROBABLY NOT
                 Units.degreesToRadians(m_result.getBestTarget().getPitch()));
 
     forwardSpeed = -m_pidController.calculate(range, 1); // the 1 is the goal range in meters
-    MathUtil.clamp(forwardSpeed, -1.0, 1.0);
+    MathUtil.clamp(forwardSpeed, -0.2, 0.2);
     // -1.0 required to ensure positive PID controller effort _increases_ range
 
     }
