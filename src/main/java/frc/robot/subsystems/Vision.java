@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
+
 public class Vision extends SubsystemBase {
   private final PhotonCamera m_camera;
   private PhotonPipelineResult m_latestResult;
@@ -41,10 +42,9 @@ public class Vision extends SubsystemBase {
     m_hasTargets = m_latestResult.hasTargets();
     if (m_hasTargets) {
       m_bestTarget = m_latestResult.getBestTarget();
-
       m_targetYaw = m_bestTarget.getYaw();
       m_targetId = m_bestTarget.getFiducialId();
-      m_targetDistance = PhotonUtils.calculateDistanceToTargetMeters(Units.inchesToMeters(4.5), Units.inchesToMeters(42), 0, Units.degreesToRadians(m_bestTarget.getPitch()));
+      m_targetDistance = PhotonUtils.calculateDistanceToTargetMeters(Units.inchesToMeters(5.25), Units.inchesToMeters(53), 0, Units.degreesToRadians(m_bestTarget.getPitch()));
       m_latency = m_latestResult.getLatencyMillis();
     }
   }

@@ -25,6 +25,7 @@ public class ShuffleboardManager {
 
 
   NetworkTableEntry m_commandScheduler = m_mainTab.add("Command Scheduler", "NULL").getEntry();
+  NetworkTableEntry m_getAngularVelocity = m_visionTab.add("Adjustable Angular Velocity(radians per second)", 0).getEntry(); 
   
   public void setup() {
     LiveWindow.disableAllTelemetry(); // LiveWindow is causing periodic loop overruns
@@ -85,6 +86,11 @@ public class ShuffleboardManager {
     m_visionTab.addNumber("ID", Robot.vision::getTargetId);
     m_visionTab.addNumber("Latency (ms)", Robot.vision::getLatency);
     m_visionTab.addNumber("Distance (m)", Robot.vision::getTargetDistance);
+
+  }
+
+  public double getAngularVelocity(){
+    return m_getAngularVelocity.getDouble(0); 
   }
 
 
