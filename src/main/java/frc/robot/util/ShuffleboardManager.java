@@ -89,7 +89,7 @@ public class ShuffleboardManager {
 
   }
 
-  public double getAngularVelocity(){
+  public double getAngularVelocityRadians(){
     return m_getAngularVelocity.getDouble(0); 
   }
 
