@@ -7,32 +7,34 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
 import lib.Motors;
 
 
-public class Singulator extends SubsystemBase {
+public class Outtake extends SubsystemBase {
 
-  private CANSparkMax m_motor;
+  private WPI_TalonSRX m_outtakeMotor;
 
-  public Singulator() {
-    this(Motors.createSparkMAX(Constants.singulator.kSingulatorMotor, MotorType.kBrushless, IdleMode.kCoast));
+  public Outtake() {
+    this(Motors.createTalonSRX(Constants.outtake.kOuttakeMotor, NeutralMode.Brake));
   }
 
-  public Singulator(CANSparkMax motor) {
-    m_motor = motor;
+  public Outtake(WPI_TalonSRX outtakeMotor) {
+    m_outtakeMotor = outtakeMotor;
   }
 
-  public void set(double power) {
-    m_motor.set(power);
+  public void outtake() {
+    m_outtakeMotor.set(Constants.outtake.kOuttakeSpeed);
   }
 
   public void stop() {
-    m_motor.set(0);
+    m_outtakeMotor.set(0);
   }
- 
 }

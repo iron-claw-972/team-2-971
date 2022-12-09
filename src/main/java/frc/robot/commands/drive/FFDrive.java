@@ -21,8 +21,8 @@ public class FFDrive extends CommandBase{
   
   @Override
   public void execute() {
-    double throttle = Driver.getThrottleValue() * Constants.drive.kMaxDriveSpeed;
-    double turn = -Driver.getTurnValue() * Constants.drive.kMaxTurnSpeed;
+    double throttle = -Driver.getThrottleValue() * Constants.drive.kMaxDriveSpeed;
+    double turn = Driver.getTurnValue() * Constants.drive.kMaxTurnSpeed;
 
     m_drive.feedForwardDrive(throttle, turn);
   }

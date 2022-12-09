@@ -8,5 +8,6 @@ public final class Constants {
   public static final DriveConstants drive = new DriveConstants();
   public static final AutoConstants auto = new AutoConstants();
   public static final IntakeConstants intake = new IntakeConstants();
-  public static final SingulatorConstants singulator = new SingulatorConstants();
+  public static final OuttakeConstants outtake = new OuttakeConstants();
+  public static final FeederConstants feeder = new FeederConstants();
 }
