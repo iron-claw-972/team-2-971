@@ -38,9 +38,7 @@ public class SenseAprilTagAtVelocity extends CommandBase {
 
   @Override
   public void execute() {
-    double turn_speed = -m_pidController.calculate(m_drive.getAngularVelocityRadians(),m_manager.getAngularVelocityRadians()); // the 1 is the goal range in meters
-    MathUtil.clamp(turn_speed, -1, 1); //change to (0,1) if this doesn't work
-    m_drive.tankDrivePercentOutput(turn_speed,0);
+    m_drive.feedForwardDrive(0,m_manager.getAngularVelocityRadians()); 
     if (m_vision.hasTargets()){
       System.out.println("I see a target!");
     }

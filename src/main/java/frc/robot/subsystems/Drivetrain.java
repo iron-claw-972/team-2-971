@@ -238,6 +238,8 @@ public class Drivetrain extends SubsystemBase {
 
   public void resetOdometry(Pose2d pose) {
     resetEncoders();
+    m_leftMotor1.setSelectedSensorPosition(0); 
+    m_rightMotor1.setSelectedSensorPosition(0); 
     m_driveSim.setPose(pose);
     m_odometry.resetPosition(pose, m_gyro.getRotation2d());
   }
@@ -246,6 +248,17 @@ public class Drivetrain extends SubsystemBase {
     m_leftEncoder.reset();
     m_rightEncoder.reset();
   }
+
+  public double getLeftWheelDistanceSinceOdometryReset(){
+    return m_leftMotor1.getSelectedSensorPosition()/2048/62*8*2*Math.PI*2;
+  }
+
+  public double getRightWheelDistanceSinceOdometryReset(){
+    return m_rightMotor1.getSelectedSensorPosition()/2048/62*8*2*Math.PI*2;
+  }
+  
+
+
 
   public Pose2d getPose() {
     return m_odometry.getPoseMeters();
@@ -284,6 +297,7 @@ public class Drivetrain extends SubsystemBase {
   public double getGyroRotation(){
     return m_gyro.getRotation2d().getDegrees();
   }
+
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds(){
     return new DifferentialDriveWheelSpeeds(m_leftEncoder.getRate(), m_rightEncoder.getRate());

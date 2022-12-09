@@ -9,4 +9,5 @@ public final class Constants {
   public static final AutoConstants auto = new AutoConstants();
   public static final IntakeConstants intake = new IntakeConstants();
   public static final SingulatorConstants singulator = new SingulatorConstants();
+  public static final VisionConstants vision = new VisionConstants(); 
 }

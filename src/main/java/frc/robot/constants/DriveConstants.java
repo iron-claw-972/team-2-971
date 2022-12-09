@@ -17,7 +17,7 @@ public class DriveConstants {
   public final double kDriveSlewRate = 3; // 1/X seconds to go from 0 to 1
   public final double kTurnSlewRate = 3; // 1/X seconds to go from 0 to 1
 
-  public final double kDeadband = 0.05;//0.02 // don't run motors when less than X power commanded
+  public final double kDeadband = 0.05;//0.02//0.05 // don't run motors when less than X power commanded
 
   public final int kLeftMotorId = 16; // fx8
   public final int kRightMotorId = 34; // fx17

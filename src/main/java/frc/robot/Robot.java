@@ -4,7 +4,12 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.MatBuilder;
+import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -33,7 +38,11 @@ public class Robot extends TimedRobot {
   // public static Intake intake = new Intake();
   public static ShuffleboardManager shuffleboard = new ShuffleboardManager();
   public static Vision vision = new Vision();
-  public static PIDController controller = new PIDController(kp, ki, kd);
+  public static PIDController controller = new PIDController(1, 0, 0);
+  DifferentialDrivePoseEstimator m_estimator = new DifferentialDrivePoseEstimator(new Rotation2d(), new Pose2d(),
+  new MatBuilder<>(Nat.N5(), Nat.N1()).fill(0.02, 0.02, 0.01, 0.02, 0.02), // State measurement standard deviations. X, Y, theta.
+  new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.02, 0.02, 0.01), // Local measurement standard deviations. Left encoder, right encoder, gyro.
+  new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.1, 0.1, 0.01)); // Global measurement standard deviations. X, Y, and theta.
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -44,8 +53,8 @@ public class Robot extends TimedRobot {
     PathLoader.loadPathGroups();
 
     //drive.setDefaultCommand(new ArcadeDrive());
-    //drive.setDefaultCommand(new FFDrive());
-    drive.setDefaultCommand(new SenseAprilTagAtVelocity(drive, shuffleboard, controller));
+    drive.setDefaultCommand(new FFDrive());
+   //drive.setDefaultCommand(new SenseAprilTagAtVelocity(drive, shuffleboard, controller));
 
     // This is really annoying so it's disabled
     DriverStation.silenceJoystickConnectionWarning(true);
