@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
 import ctre_shims.PhoenixMotorControllerGroup;
@@ -30,6 +31,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.numbers.N2;
 import edu.wpi.first.math.system.LinearSystem;
 import edu.wpi.first.math.system.plant.LinearSystemId;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.SPI;
@@ -44,76 +46,42 @@ import lib.Motors;
 
 public class Drivetrain extends SubsystemBase {
 
-  private final WPI_TalonFX m_leftMotor1;
-  private final WPI_TalonFX m_rightMotor1;
+  private final WPI_TalonSRX m_leftMotor1;
+  private final WPI_TalonSRX m_rightMotor1;
 
-  private final TalonEncoder m_leftEncoder;
-  private final TalonEncoder m_rightEncoder;
+  private final Encoder m_leftEncoder;
+  private final Encoder m_rightEncoder;
 
   private final PhoenixMotorControllerGroup m_leftMotors;
   private final PhoenixMotorControllerGroup m_rightMotors;
 
   private final DifferentialDrive m_dDrive;
 
+  private final DifferentialDriveOdometry m_odometry; 
+
   private final AHRS m_gyro;
 
-  private final PIDController m_leftDrivePID = new PIDController(
-    Constants.drive.kLeftDriveP,
-    Constants.drive.kLeftDriveI,
-    Constants.drive.kLeftDriveD
-  );
-  private final PIDController m_rightDrivePID = new PIDController(
-    Constants.drive.kRightDriveP,
-    Constants.drive.kRightDriveI,
-    Constants.drive.kRightDriveD
-  );
 
-  private final DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(Constants.drive.kTrackWidth);
-  private final DifferentialDriveOdometry m_odometry;
-
-  private final SimpleMotorFeedforward m_driveFF = new SimpleMotorFeedforward(Constants.drive.kSLinear, Constants.drive.kVLinear);
-  private final RamseteController ramseteController = new RamseteController(Constants.auto.kRamseteB, Constants.auto.kRamseteZeta); 
-
-  private final Field2d m_field = new Field2d();
-
-  // Simulation
-  private final TalonEncoderSim m_leftEncoderSim;
-  private final TalonEncoderSim m_rightEncoderSim;
-  private final LinearSystem<N2, N2, N2> m_driveSystem = LinearSystemId.identifyDrivetrainSystem(
-    Constants.drive.kVLinear,
-    Constants.drive.kALinear,
-    Constants.drive.kVAngular,
-    Constants.drive.kAAngular
-  );
-  private final DifferentialDrivetrainSim m_driveSim = new DifferentialDrivetrainSim(
-    m_driveSystem,
-    Constants.drive.kGearbox,
-    Constants.drive.kGearRatio,
-    Constants.drive.kTrackWidth,
-    Constants.drive.kWheelRadius,
-    null
-  );
-  
   public Drivetrain() {
     this(
-      Motors.createTalonFX(Constants.drive.kLeftMotorId, NeutralMode.Brake, true, 30, 40, 1),
-      Motors.createTalonFX(Constants.drive.kRightMotorId, NeutralMode.Brake, true, 30, 40, 1)
+      Motors.createTalonSRX(Constants.drive.kLeftMotorId, NeutralMode.Brake, true, true, 30, 40, 1),
+      Motors.createTalonSRX(Constants.drive.kRightMotorId, NeutralMode.Brake, true, true, 30, 40, 1)
     );
   }
 
-  public Drivetrain(WPI_TalonFX leftMotor1, WPI_TalonFX rightMotor1) {
+  public Drivetrain(WPI_TalonSRX leftMotor1, WPI_TalonSRX rightMotor1) {
     this(leftMotor1, rightMotor1, new AHRS(SPI.Port.kMXP), new DifferentialDrive(leftMotor1, rightMotor1));
   }
 
-  public Drivetrain(WPI_TalonFX leftMotor1, WPI_TalonFX rightMotor1, AHRS gyro) {
+  public Drivetrain(WPI_TalonSRX leftMotor1, WPI_TalonSRX rightMotor1, AHRS gyro) {
     this(leftMotor1, rightMotor1, gyro, new DifferentialDrive(leftMotor1, rightMotor1));
   }
 
-  public Drivetrain(WPI_TalonFX leftMotor1, WPI_TalonFX rightMotor1, DifferentialDrive dDrive) {
+  public Drivetrain(WPI_TalonSRX leftMotor1, WPI_TalonSRX rightMotor1, DifferentialDrive dDrive) {
     this(leftMotor1, rightMotor1, new AHRS(SPI.Port.kMXP), dDrive);
   }
 
-  public Drivetrain(WPI_TalonFX leftMotor1, WPI_TalonFX rightMotor1, AHRS gyro, DifferentialDrive dDrive) {
+  public Drivetrain(WPI_TalonSRX leftMotor1, WPI_TalonSRX rightMotor1, AHRS gyro, DifferentialDrive dDrive) {
     // Motor setup
     m_leftMotor1 = leftMotor1;
     m_rightMotor1 = rightMotor1;
@@ -129,15 +97,15 @@ public class Drivetrain extends SubsystemBase {
       m_rightMotors.setInverted(true);
     }
 
-    // Encoder setup
-    m_leftEncoder = new TalonEncoder(m_leftMotor1);
-    m_rightEncoder = new TalonEncoder(m_rightMotor1);
+    m_leftEncoder = new Encoder(3, 4, true, Encoder.EncodingType.k4X);
+    m_rightEncoder = new Encoder(1, 2, false, Encoder.EncodingType.k4X); 
+    // // Encoder setup
+    // m_leftEncoder = new TalonEncoder(m_leftMotor1);
+    // m_rightEncoder = new TalonEncoder(m_rightMotor1);
 
-    m_leftEncoderSim = new TalonEncoderSim(m_leftEncoder);
-    m_rightEncoderSim = new TalonEncoderSim(m_rightEncoder);
-
-    m_leftEncoder.setDistancePerPulse(2 * Math.PI * Constants.drive.kWheelRadius / Constants.drive.kGearRatio / Constants.drive.kEncoderResolution);
-    m_rightEncoder.setDistancePerPulse(2 * Math.PI * Constants.drive.kWheelRadius / Constants.drive.kGearRatio / Constants.drive.kEncoderResolution);
+   
+    // m_leftEncoder.setDistancePerPulse(2 * Math.PI * Constants.drive.kWheelRadius / Constants.drive.kGearRatio / Constants.drive.kEncoderResolution);
+    // m_rightEncoder.setDistancePerPulse(2 * Math.PI * Constants.drive.kWheelRadius / Constants.drive.kGearRatio / Constants.drive.kEncoderResolution);
 
     resetEncoders();
 
@@ -151,81 +119,25 @@ public class Drivetrain extends SubsystemBase {
 
     // Odometry setup
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
-
-    // Place field on Shuffleboard
-    SmartDashboard.putData("Field", m_field);
   }
+
 
   @Override
   public void periodic() {
     updateOdometry();
-    m_field.setRobotPose(getPose());
   }
 
   @Override
   public void simulationPeriodic() {
-    m_driveSim.setInputs(
-      m_leftMotors.get() * RobotController.getBatteryVoltage(),
-      m_rightMotors.get() * RobotController.getBatteryVoltage()
-    );
-    m_driveSim.update(0.02);
-
-    m_leftEncoderSim.setDistance(m_driveSim.getLeftPositionMeters());
-    m_leftEncoderSim.setRate(m_driveSim.getLeftVelocityMetersPerSecond());
-    m_rightEncoderSim.setDistance(m_driveSim.getRightPositionMeters());
-    m_rightEncoderSim.setRate(m_driveSim.getRightVelocityMetersPerSecond());
-
-    // NavX Sim
-    int dev = SimDeviceDataJNI.getSimDeviceHandle("navX-Sensor[0]");
-    SimDouble angle = new SimDouble(SimDeviceDataJNI.getSimValueHandle(dev, "Yaw"));
-    // NavX expects clockwise positive, but sim outputs clockwise negative
-    angle.set(Math.IEEEremainder(-m_driveSim.getHeading().getDegrees(), 360));
+   
   }
 
-  public RamseteController getRamseteController(){
-    return ramseteController; 
-  }
-
-  public SimpleMotorFeedforward getDriveFF() {
-    return m_driveFF;
-  }
-
-  public PIDController getLeftDrivePID() {
-    return m_leftDrivePID;
-  }
-
-  public PIDController getRightDrivePID() {
-    return m_rightDrivePID;
-  }
-
+ 
   public void resetGyro() {
     m_gyro.reset();
   }
 
-  public DifferentialDriveKinematics getKinematics(){
-    return m_kinematics; 
-  }
-  public void setSpeeds(DifferentialDriveWheelSpeeds speeds) {
-    // Calculate FF
-    final double leftFeedforward = m_driveFF.calculate(speeds.leftMetersPerSecond);
-    final double rightFeedforward = m_driveFF.calculate(speeds.rightMetersPerSecond);
-
-    // Calculate PID
-    final double leftOutput = m_leftDrivePID.calculate(m_leftEncoder.getRate(), speeds.leftMetersPerSecond);
-    final double rightOutput = m_rightDrivePID.calculate(m_rightEncoder.getRate(), speeds.rightMetersPerSecond);
-
-    // Output PID+FF
-    m_leftMotors.setVoltage(leftOutput + leftFeedforward);
-    m_rightMotors.setVoltage(rightOutput + rightFeedforward);
-    m_dDrive.feed(); 
-  }
-
-  public void feedForwardDrive(double throttle, double turn) {
-    // Convert drivetrain throttle and turn to left and right wheel speeds
-    var wheelSpeeds = m_kinematics.toWheelSpeeds(new ChassisSpeeds(throttle, 0.0, turn));
-
-    setSpeeds(wheelSpeeds);
-  }
+ 
 
   public void updateOdometry() {
     // Upate robot pose (x, y, theta)
@@ -240,7 +152,6 @@ public class Drivetrain extends SubsystemBase {
     resetEncoders();
     m_leftMotor1.setSelectedSensorPosition(0); 
     m_rightMotor1.setSelectedSensorPosition(0); 
-    m_driveSim.setPose(pose);
     m_odometry.resetPosition(pose, m_gyro.getRotation2d());
   }
 
@@ -250,11 +161,17 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getLeftWheelDistanceSinceOdometryReset(){
-    return m_leftMotor1.getSelectedSensorPosition()/2048/62*8*2*Math.PI*2;
+    return (m_leftEncoder.getDistance()/2050)*6*Math.PI;  
   }
 
   public double getRightWheelDistanceSinceOdometryReset(){
-    return m_rightMotor1.getSelectedSensorPosition()/2048/62*8*2*Math.PI*2;
+    return (m_rightEncoder.getDistance()/2050)*6*Math.PI;  
+
+  }
+
+  public void drive(double leftSpeed, double rightSpeed){
+    m_leftMotor1.set(ControlMode.PercentOutput, leftSpeed);
+    m_rightMotor1.set(ControlMode.PercentOutput, rightSpeed); 
   }
   
 
