@@ -12,7 +12,7 @@ import edu.wpi.first.math.util.Units;
 
 
 public class VisionConstants {
-  
+  //https://www.youtube.com/watch?v=TG9KAa2EGzQ
   public static final Pose3d kTargetPose = new Pose3d(x, y, z, new Rotation3d(roll, pitch, yaw));
   public static final Transform3d kCameraToRobot = new Transform3d(new Translation3d(x,y,z), new Rotation3d(roll, pitch, yaw)));  
 }
