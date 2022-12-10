@@ -3,6 +3,7 @@ package frc.robot.controls;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import frc.robot.commands.feeder.FeedBall;
+import frc.robot.commands.intake.IntakeBall;
 import frc.robot.commands.outtake.OuttakeBall;
 import frc.robot.constants.Constants;
 import lib.controllers.GameController;
@@ -20,7 +21,9 @@ public class Driver {
     // driver.get(Button.A).whenPressed(new AlignToPlant(false));
     driver.get(driver.LEFT_TRIGGER_BUTTON).whileActiveOnce(new FeedBall(true));
     driver.get(driver.RIGHT_TRIGGER_BUTTON).whileActiveOnce(new FeedBall(false));
-    driver.get(Button.A).whenHeld(new OuttakeBall());
+    driver.get(Button.Y).whenHeld(new OuttakeBall());
+    driver.get(Button.A).whenHeld(new IntakeBall());
+
   }
 
   public static double getThrottleValue() {
