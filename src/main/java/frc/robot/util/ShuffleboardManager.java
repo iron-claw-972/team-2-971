@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.robot.Robot;
-import frc.robot.commands.auto.PathPlannerCommand;
 
 public class ShuffleboardManager {
 
@@ -39,10 +38,10 @@ public class ShuffleboardManager {
 
   public void setupAutoChooser() {
     m_autoCommand.setDefaultOption("Do Nothing", new PrintCommand("This will do nothing!"));
-    m_autoCommand.addOption("TestAuto", new PathPlannerCommand("TestAuto", 0)); 
-    m_autoCommand.addOption("OneDotAuto", new PathPlannerCommand("OneDotAuto", 0)); 
-    m_autoCommand.addOption("TwoDotAuto", new PathPlannerCommand("TwoDotAuto", 0)); 
-    m_autoCommand.addOption("ThreeDotAuto", new PathPlannerCommand("ThreeDotAuto", 0)); 
+    // m_autoCommand.addOption("TestAuto", new PathPlannerCommand("TestAuto", 0)); 
+    // m_autoCommand.addOption("OneDotAuto", new PathPlannerCommand("OneDotAuto", 0)); 
+    // m_autoCommand.addOption("TwoDotAuto", new PathPlannerCommand("TwoDotAuto", 0)); 
+    // m_autoCommand.addOption("ThreeDotAuto", new PathPlannerCommand("ThreeDotAuto", 0)); 
   }
 
   public void loadAllTabs() {

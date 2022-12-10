@@ -14,8 +14,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.drive.FFDrive;
-import frc.robot.commands.vision.SenseAprilTagAtVelocity;
 import frc.robot.controls.Driver;
 import frc.robot.controls.Operator;
 import frc.robot.subsystems.Drivetrain;
@@ -53,8 +51,8 @@ public class Robot extends TimedRobot {
     PathLoader.loadPathGroups();
 
     //drive.setDefaultCommand(new ArcadeDrive());
-    drive.setDefaultCommand(new FFDrive());
-   //drive.setDefaultCommand(new SenseAprilTagAtVelocity(drive, shuffleboard, controller));
+    // drive.setDefaultCommand(new FFDrive());
+    //drive.setDefaultCommand(new SenseAprilTagAtVelocity(drive, shuffleboard, controller));
 
     // This is really annoying so it's disabled
     DriverStation.silenceJoystickConnectionWarning(true);

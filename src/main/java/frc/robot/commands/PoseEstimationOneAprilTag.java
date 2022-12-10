@@ -1,4 +1,4 @@
-package frc.robot.commands.vision;
+package frc.robot.commands;
 
 import frc.robot.constants.Constants;
 import frc.robot.controls.Driver;
