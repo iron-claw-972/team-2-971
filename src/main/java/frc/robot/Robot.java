@@ -53,7 +53,7 @@ public class Robot extends TimedRobot {
     PathLoader.loadPathGroups();
 
     //drive.setDefaultCommand(new ArcadeDrive());
-    //drive.setDefaultCommand(new FFDrive());
+    drive.setDefaultCommand(new FFDrive());
    //drive.setDefaultCommand(new SenseAprilTagAtVelocity(drive, shuffleboard, controller));
 
     // This is really annoying so it's disabled
