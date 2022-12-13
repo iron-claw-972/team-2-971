@@ -41,6 +41,7 @@ public class ShuffleboardManager {
     m_autoCommand.addOption("OneDotAuto", new PathPlannerCommand("OneDotAuto", 0)); 
     m_autoCommand.addOption("TwoDotAuto", new PathPlannerCommand("TwoDotAuto", 0)); 
     m_autoCommand.addOption("ThreeDotAuto", new PathPlannerCommand("ThreeDotAuto", 0)); 
+    m_autoCommand.addOption("FourDotAuto", new PathPlannerCommand("FourDotAuto", 0)); 
   }
 
   public void loadAllTabs() {
