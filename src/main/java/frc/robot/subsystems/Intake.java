@@ -20,17 +20,17 @@ import lib.Motors;
 
 public class Intake extends SubsystemBase {
 
-  private CANSparkMax m_singulatorMotor;
+  private WPI_TalonSRX m_singulatorMotor;
   private WPI_TalonSRX m_intakeMotor;
 
   public Intake() {
     this(
-      Motors.createSparkMAX(Constants.intake.kIntakeMotor, MotorType.kBrushless, IdleMode.kCoast),
+      Motors.createTalonSRX(Constants.intake.kIntakeMotor, NeutralMode.Brake),
       Motors.createTalonSRX(Constants.intake.kSingulatorMotor, NeutralMode.Brake)
     );
   }
 
-  public Intake(CANSparkMax singulatorMotor, WPI_TalonSRX intakeMotor) {
+  public Intake(WPI_TalonSRX singulatorMotor, WPI_TalonSRX intakeMotor) {
     m_singulatorMotor = singulatorMotor;
     m_intakeMotor = intakeMotor;
   }
