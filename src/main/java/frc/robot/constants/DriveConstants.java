@@ -33,9 +33,9 @@ public class DriveConstants {
   public final double kRightDriveD = 0;
 
   // Drive feedforward
-  public final double kSLinear = 0.5523;
-  public final double kVLinear = 2.6087;
-  public final double kALinear = 0.19688;
+  public final double kSLinear = 0.54043;
+  public final double kVLinear = 2.8583;
+  public final double kALinear = 0.29259;
 
   public final double kSAngular = 0.57582;
   public final double kVAngular = 8.9386;
