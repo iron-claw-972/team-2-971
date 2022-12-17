@@ -7,6 +7,10 @@
 
 package frc.robot.subsystems;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Map;
+
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonUtils;
 import org.photonvision.targeting.PhotonPipelineResult;
@@ -17,11 +21,14 @@ import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.constants.Constants;
 
 
 
@@ -32,12 +39,11 @@ public class Vision extends SubsystemBase {
   private double m_targetYaw = -1;
   private boolean m_hasTargets = false;
   private double m_targetId = -1;
-  private double m_targetDistance = -1;
   private double m_latency = -1;
  
 
   public Vision() {
-    this(new PhotonCamera("Microsoft_LifeCam_HD-3000"));
+    this(new PhotonCamera(Constants.vision.kCameraName));
   }
 
   public Vision(PhotonCamera camera) {
@@ -52,15 +58,23 @@ public class Vision extends SubsystemBase {
       m_bestTarget = m_latestResult.getBestTarget();
       m_targetYaw = m_bestTarget.getYaw();
       m_targetId = m_bestTarget.getFiducialId();
-      m_targetDistance = PhotonUtils.calculateDistanceToTargetMeters(Units.inchesToMeters(5.25), Units.inchesToMeters(53), 0, Units.degreesToRadians(m_bestTarget.getPitch()));
       m_latency = m_latestResult.getLatencyMillis();
     }
   }
 
-  public PhotonPipelineResult returnLatestResult(){
-    return m_latestResult; 
+  public Map<Pose2d, Double> getPoseEstimation() {
+    if (m_hasTargets) {
+      double imageCaptureTime = Timer.getFPGATimestamp() - m_latency;
+      Transform2d camToTargetTrans = m_bestTarget.getBestCameraToTarget();
+      Pose2d camPose = Constants.vision.kTagPoses.get(m_targetId).transformBy(camToTargetTrans.inverse());
+      return Collections.singletonMap(camPose.transformBy(Constants.vision.kCameraToRobot), imageCaptureTime);
+    }
+    return null;
   }
 
+  public PhotonPipelineResult returnLatestResult(){
+    return m_latestResult;
+  }
 
   public boolean hasTargets() {
     return m_hasTargets;
@@ -72,10 +86,6 @@ public class Vision extends SubsystemBase {
 
   public double getTargetId() {
     return m_targetId;
-  }
-
-  public double getTargetDistance() {
-    return m_targetDistance;
   }
 
   public double getLatency() {

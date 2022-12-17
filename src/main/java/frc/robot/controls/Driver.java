@@ -15,8 +15,8 @@ public class Driver {
   private static SlewRateLimiter slewTurn = new SlewRateLimiter(Constants.drive.kDriveSlewRate);
 
   public static void configureControls() {
-    driver.get(Button.Y).whenPressed(new AlignToPlant(true));
-    driver.get(Button.A).whenPressed(new AlignToPlant(false));
+    // driver.get(Button.Y).whenPressed(new AlignToPlant(true));
+    // driver.get(Button.A).whenPressed(new AlignToPlant(false));
   }
 
   public static double getThrottleValue() {
