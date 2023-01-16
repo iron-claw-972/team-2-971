@@ -26,7 +26,4 @@ public class VisionConstants {
   public static final ArrayList<AprilTag> kTagPoses = new ArrayList<AprilTag>(List.of(
     new AprilTag(2, new Pose3d())
   ));
-  public static final AprilTagFieldLayout kAprilTagFieldLayout =
-    new AprilTagFieldLayout(kTagPoses, FieldConstants.kFieldLength, FieldConstants.kFieldWidth);
-
 }

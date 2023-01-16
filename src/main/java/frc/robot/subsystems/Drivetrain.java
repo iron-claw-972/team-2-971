@@ -47,6 +47,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.constants.Constants;
+import frc.robot.util.Vision;
 import lib.Motors;
 
 
@@ -243,19 +244,12 @@ public class Drivetrain extends SubsystemBase {
       m_rightEncoder.getDistance()
     );
 
-    Optional<Pair<Pose3d,Double>> result = Robot.vision.getEstimatedGlobalPose(m_poseEstimator.getEstimatedPosition());
+    Optional<Pair<Pose3d,Double>> result = Vision.getEstimatedGlobalPose(m_poseEstimator.getEstimatedPosition());
 
     if (result.isPresent() && result.get().getFirst() != null && result.get().getSecond() != null) {
       Pair<Pose3d,Double> camPose = result.get();
       m_poseEstimator.addVisionMeasurement(camPose.getFirst().toPose2d(), camPose.getSecond());
-      m_field.getObject("Cam Est Pos").setPose(camPose.getFirst().toPose2d());
-    } else {
-        // move it way off the screen to make it disappear
-        m_field.getObject("Cam Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
     }
-
-    m_field.getObject("Actual Pos").setPose(m_driveSim.getPose());
-    m_field.setRobotPose(m_poseEstimator.getEstimatedPosition());
   }
 
   public void resetOdometry(Pose2d pose) {

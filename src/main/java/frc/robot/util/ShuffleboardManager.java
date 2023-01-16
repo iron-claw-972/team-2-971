@@ -83,9 +83,9 @@ public class ShuffleboardManager {
   }
 
   public void loadVisionTab() {
-    m_visionTab.addNumber("Yaw (deg)", Robot.vision::getTargetYaw);
-    m_visionTab.addNumber("ID", Robot.vision::getTargetId);
-    m_visionTab.addNumber("Latency (ms)", Robot.vision::getLatency);
+    // m_visionTab.addNumber("Yaw (deg)", Robot.vision::getTargetYaw);
+    // m_visionTab.addNumber("ID", Robot.vision::getTargetId);
+    // m_visionTab.addNumber("Latency (ms)", Robot.vision::getLatency);
   }
 
   public double getAngularVelocityRadians(){

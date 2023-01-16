@@ -19,9 +19,10 @@ import frc.robot.controls.Driver;
 import frc.robot.controls.Operator;
 import frc.robot.subsystems.Drivetrain;
 // import frc.robot.subsystems.Singulator;
-import frc.robot.subsystems.Vision;
+// import frc.robot.subsystems.Vision;
 // import frc.robot.subsystems.Intake;
 import frc.robot.util.ShuffleboardManager;
+import frc.robot.util.Vision;
 import lib.PathLoader;
 
 /**
@@ -36,8 +37,8 @@ public class Robot extends TimedRobot {
   // public static Singulator singulator = new Singulator();
   // public static Intake intake = new Intake();
   public static ShuffleboardManager shuffleboard = new ShuffleboardManager();
-  public static Vision vision = new Vision();
-  public static PIDController controller = new PIDController(1, 0, 0);
+  // public static Vision vision = new Vision();
+  // public static PIDController controller = new PIDController(1, 0, 0);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -58,6 +59,7 @@ public class Robot extends TimedRobot {
     Operator.configureControls();
     
     shuffleboard.setup();
+    Vision.setup();
   }
 
   /**
