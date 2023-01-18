@@ -37,6 +37,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.numbers.N2;
 import edu.wpi.first.math.system.LinearSystem;
 import edu.wpi.first.math.system.plant.LinearSystemId;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.SPI;
@@ -254,7 +255,7 @@ public class Drivetrain extends SubsystemBase {
 
   public void printPose(){
     Pose2d p = m_poseEstimator.getEstimatedPosition();
-    System.out.printf("ROBOT POSE:\ntoString(): %s\nRotation: %.2f\nPosition: (%.2f, %.2f)\n", p.toString(), p.getRotation(), p.getX(), p.getY());
+    System.out.printf("ROBOT POSE:\ntoString(): %s\nRotation: %.2f degrees\nPosition: (%.2f, %.2f)\n", p.toString(), p.getRotation().getDegrees(), p.getX(), p.getY());
   }
 
   public void resetOdometry(Pose2d pose) {
