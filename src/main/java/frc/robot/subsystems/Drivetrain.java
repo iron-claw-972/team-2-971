@@ -30,6 +30,7 @@ import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -41,6 +42,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -160,7 +162,7 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putData(m_dDrive);
 
     // Odometry setup
-    m_poseEstimator = new DifferentialDrivePoseEstimator(m_kinematics, m_gyro.getRotation2d(), m_leftEncoder.getDistance(), m_rightEncoder.getDistance(), new Pose2d());
+    m_poseEstimator = new DifferentialDrivePoseEstimator(m_kinematics, m_gyro.getRotation2d(), m_leftEncoder.getDistance(), m_rightEncoder.getDistance(), new Pose2d(new Translation2d(15.05, 2.79), new Rotation2d(0)));
 
     // Place field on Shuffleboard
     SmartDashboard.putData("Field", m_field);
@@ -249,13 +251,15 @@ public class Drivetrain extends SubsystemBase {
 
     if (result.isPresent() && result.get().getFirst() != null && result.get().getSecond() != null) {
       Pair<Pose3d,Double> camPose = result.get();
-      m_poseEstimator.addVisionMeasurement(camPose.getFirst().toPose2d(), camPose.getSecond());
+      m_poseEstimator.addVisionMeasurement(camPose.getFirst().toPose2d(), Timer.getFPGATimestamp() - Units.millisecondsToSeconds(camPose.getSecond()));
+      // m_poseEstimator.addVisionMeasurement(new Pose2d(), 0.02);
+      // System.out.println(camPose.getFirst().toPose2d().toString());
     }
   }
 
   public void printPose(){
-    Pose2d p = m_poseEstimator.getEstimatedPosition();
-    System.out.printf("ROBOT POSE:\ntoString(): %s\nRotation: %.2f degrees\nPosition: (%.2f, %.2f)\n", p.toString(), p.getRotation().getDegrees(), p.getX(), p.getY());
+    // Pose2d p = m_poseEstimator.getEstimatedPosition();
+    // System.out.printf("ROBOT POSE:\ntoString(): %s\nRotation: %.2f degrees\nPosition: (%.2f, %.2f)\n", p.toString(), p.getRotation().getDegrees(), p.getX(), p.getY());
   }
 
   public void resetOdometry(Pose2d pose) {
