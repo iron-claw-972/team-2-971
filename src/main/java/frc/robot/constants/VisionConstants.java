@@ -21,9 +21,9 @@ import edu.wpi.first.math.util.Units;
 
 
 public class VisionConstants {
-  public static final String kCameraName = "Global_Shutter_Camera";
-  public static final Transform3d kCameraToRobot = new Transform3d(new Translation3d(), new Rotation3d()); 
-  public static final ArrayList<AprilTag> kTagPoses = new ArrayList<AprilTag>(List.of(
+  public final String kCameraName = "Global_Shutter_Camera";
+  public final Transform3d kCameraToRobot = new Transform3d(new Translation3d(), new Rotation3d()); 
+  public final ArrayList<AprilTag> kTagPoses = new ArrayList<AprilTag>(List.of(
     new AprilTag(2, new Pose3d())
   ));
 }
