@@ -57,7 +57,6 @@ public class Vision {
     ));
     try {
       aprilTagFieldLayout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2023ChargedUp.m_resourceFile);
-      System.out.println("April tag 2 pose: "+aprilTagFieldLayout.getTagPose(2).get());
     } catch (IOException ex) {
       aprilTagFieldLayout = new AprilTagFieldLayout(Constants.vision.kTagPoses, Constants.field.kFieldLength, Constants.field.kFieldWidth);
       System.out.println("Vision setup IOException: "+ex.getMessage());
@@ -74,6 +73,10 @@ public class Vision {
   //   }
   //   return null;
   // }
+
+public static AprilTagFieldLayout getAprilTagFieldLayout(){
+  return aprilTagFieldLayout;
+}
 
   public static Optional<Pair<Pose3d,Double>> getEstimatedGlobalPose(Pose2d prevEstimatedRobotPose) {
     robotPoseEstimator.setReferencePose(prevEstimatedRobotPose);

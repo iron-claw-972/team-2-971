@@ -7,19 +7,16 @@
 
 package frc.robot.subsystems;
 
+import java.util.Optional;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
 import ctre_shims.PhoenixMotorControllerGroup;
 import ctre_shims.TalonEncoder;
 import ctre_shims.TalonEncoderSim;
-
-import java.util.Optional;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-
-
 import edu.wpi.first.hal.SimDouble;
 import edu.wpi.first.hal.simulation.SimDeviceDataJNI;
 import edu.wpi.first.math.Pair;
@@ -32,7 +29,6 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.numbers.N2;
 import edu.wpi.first.math.system.LinearSystem;
@@ -45,7 +41,6 @@ import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Robot;
 import frc.robot.constants.Constants;
 import frc.robot.util.Vision;
 import lib.Motors;
@@ -267,6 +262,14 @@ public class Drivetrain extends SubsystemBase {
   public void resetEncoders() {
     m_leftEncoder.reset();
     m_rightEncoder.reset();
+  }
+
+  public DifferentialDrivePoseEstimator getPoseEstimator(){
+    return m_poseEstimator;
+  }
+
+  public void resetPose(double x, double y, double rotation){
+    m_poseEstimator.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getDistance(), m_rightEncoder.getDistance(), new Pose2d(x, y, new Rotation2d(rotation)));
   }
 
   public double getLeftWheelDistanceSinceOdometryReset(){

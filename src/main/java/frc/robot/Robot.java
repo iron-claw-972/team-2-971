@@ -9,6 +9,7 @@ import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -99,6 +100,8 @@ public class Robot extends TimedRobot {
     if (m_autoCommand != null) {
       m_autoCommand.schedule();
     }
+    Pose3d aprilTag2 = Vision.getAprilTagFieldLayout().getTagPose(2).get();
+    drive.resetPose(aprilTag2.getX()-1, aprilTag2.getY(), 0);
   }
 
   /**
