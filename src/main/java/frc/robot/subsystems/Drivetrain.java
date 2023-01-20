@@ -252,6 +252,10 @@ public class Drivetrain extends SubsystemBase {
     }
   }
 
+  public void printPose(){
+    System.out.printf("ROBOT POSE: (%.2f, %.2f), %.2f degrees\n", getPose().getX(), getPose().getY(), getPose().getRotation().getDegrees());
+  };
+
   public void resetOdometry(Pose2d pose) {
     resetEncoders();
     m_leftMotor1.setSelectedSensorPosition(0); 
