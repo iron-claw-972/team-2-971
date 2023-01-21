@@ -46,12 +46,11 @@ public class Vision {
   private static RobotPoseEstimator robotPoseEstimator;
   private static AprilTagFieldLayout aprilTagFieldLayout;
  
-  /**Sets up vision*/
+
   public static void setup() {
     setup(new PhotonCamera(Constants.vision.kCameraName));
   }
 
-  /**Sets up vision (with camera)*/
   public static void setup(PhotonCamera camera) {
     ArrayList<Pair<PhotonCamera, Transform3d>> camList = new ArrayList<Pair<PhotonCamera, Transform3d>>(List.of(
       new Pair<PhotonCamera, Transform3d>(camera, Constants.vision.kCameraToRobot)
@@ -82,14 +81,6 @@ public class Vision {
   //   }
   //   return null;
   // }
-
-  public static Pose3d getAprilTagPose(int id){
-    return aprilTagFieldLayout.getTagPose(id).get();
-  }
-
-public static AprilTagFieldLayout getAprilTagFieldLayout(){
-  return aprilTagFieldLayout;
-}
 
   public static Optional<Pair<Pose3d,Double>> getEstimatedGlobalPose(Pose2d prevEstimatedRobotPose) {
     robotPoseEstimator.setReferencePose(prevEstimatedRobotPose);

@@ -9,7 +9,6 @@ import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -40,7 +39,7 @@ public class Robot extends TimedRobot {
   public static ShuffleboardManager shuffleboard = new ShuffleboardManager();
   // public static Vision vision = new Vision();
   // public static PIDController controller = new PIDController(1, 0, 0);
-  public final static Pose3d[] aprilTags = new Pose3d[9];
+  // public final static Pose3d[] aprilTags = new Pose3d[9];
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -64,9 +63,9 @@ public class Robot extends TimedRobot {
     Vision.setup();
 
     // Put April tags in array
-    for(int i = 1; i <= 8; i++){
-      aprilTags[i]=Vision.getAprilTagPose(i);
-    }
+    // for(int i = 1; i <= 8; i++){
+    //   aprilTags[i]=Vision.getAprilTagPose(i);
+    // }
   }
 
   /**
@@ -106,9 +105,6 @@ public class Robot extends TimedRobot {
     if (m_autoCommand != null) {
       m_autoCommand.schedule();
     }
-    // Sets the pose to in front of april tag 2 at the start of the game
-    Pose3d aprilTag2 = aprilTags[2];
-    drive.resetPose(aprilTag2.getX()-1, aprilTag2.getY(), 0);
   }
 
   /**
