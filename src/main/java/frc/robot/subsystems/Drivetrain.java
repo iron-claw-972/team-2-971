@@ -19,7 +19,9 @@ import java.util.Optional;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
-
+import edu.wpi.first.apriltag.AprilTag;
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.hal.SimDouble;
 import edu.wpi.first.hal.simulation.SimDeviceDataJNI;
 import edu.wpi.first.math.Pair;
@@ -162,6 +164,10 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putData(m_dDrive);
 
     // Odometry setup
+    AprilTagFieldLayout aprilTagFieldLayout = Vision.getTagFieldLayout();
+    Optional<Pose3d> tag2 = aprilTagFieldLayout.getTagPose(2);
+    
+
     m_poseEstimator = new DifferentialDrivePoseEstimator(m_kinematics, m_gyro.getRotation2d(), m_leftEncoder.getDistance(), m_rightEncoder.getDistance(), new Pose2d(new Translation2d(15.05, 2.79), new Rotation2d(0)));
 
     // Place field on Shuffleboard
