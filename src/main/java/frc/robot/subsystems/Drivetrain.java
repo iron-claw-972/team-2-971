@@ -32,6 +32,7 @@ import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
@@ -166,7 +167,7 @@ public class Drivetrain extends SubsystemBase {
     // Odometry setup
     AprilTagFieldLayout aprilTagFieldLayout = Vision.getTagFieldLayout();
     Optional<Pose3d> tag2 = aprilTagFieldLayout.getTagPose(2);
-    
+        
 
     m_poseEstimator = new DifferentialDrivePoseEstimator(m_kinematics, m_gyro.getRotation2d(), m_leftEncoder.getDistance(), m_rightEncoder.getDistance(), new Pose2d(new Translation2d(15.05, 2.79), new Rotation2d(0)));
 
@@ -265,6 +266,7 @@ public class Drivetrain extends SubsystemBase {
 
   public void printPose(){
     Pose2d p = m_poseEstimator.getEstimatedPosition();
+    System.out.println(Vision.getTagFieldLayout().getTagPose(2).toString());
     System.out.printf("ROBOT POSE:\ntoString(): %s\nRotation: %.2f degrees\nPosition: (%.2f, %.2f)\n", p.toString(), p.getRotation().getDegrees(), p.getX(), p.getY());
   }
 
