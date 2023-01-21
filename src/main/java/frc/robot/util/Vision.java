@@ -55,6 +55,8 @@ public class Vision {
     ArrayList<Pair<PhotonCamera, Transform3d>> camList = new ArrayList<Pair<PhotonCamera, Transform3d>>(List.of(
       new Pair<PhotonCamera, Transform3d>(camera, Constants.vision.kCameraToRobot)
     ));
+    getTagFieldLayout();
+    aprilTagFieldLayout.setOrigin(AprilTagFieldLayout.OriginPosition.kBlueAllianceWallRightSide);
     
     robotPoseEstimator = new RobotPoseEstimator(aprilTagFieldLayout, PoseStrategy.AVERAGE_BEST_TARGETS, camList);
 
