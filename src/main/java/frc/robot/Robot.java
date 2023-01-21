@@ -100,6 +100,7 @@ public class Robot extends TimedRobot {
     if (m_autoCommand != null) {
       m_autoCommand.schedule();
     }
+    // Sets the pose to in front of april tag 2 at the start of the game
     Pose3d aprilTag2 = Vision.getAprilTagFieldLayout().getTagPose(2).get();
     drive.resetPose(aprilTag2.getX()-1, aprilTag2.getY(), 0);
   }

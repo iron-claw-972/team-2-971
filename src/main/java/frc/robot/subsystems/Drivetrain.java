@@ -268,6 +268,7 @@ public class Drivetrain extends SubsystemBase {
     return m_poseEstimator;
   }
 
+  /**Resets the pose to a specific spot*/
   public void resetPose(double x, double y, double rotation){
     m_poseEstimator.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getDistance(), m_rightEncoder.getDistance(), new Pose2d(x, y, new Rotation2d(rotation)));
   }
