@@ -278,6 +278,10 @@ public class Drivetrain extends SubsystemBase {
     m_poseEstimator.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getDistance(), m_rightEncoder.getDistance(), pose);
   }
 
+  public void resetPose(double x, double y, double rotation){
+    m_poseEstimator.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getDistance(), m_rightEncoder.getDistance(), new Pose2d(new Translation2d(x, y), new Rotation2d(rotation)));
+  }
+
   public void resetEncoders() {
     m_leftEncoder.reset();
     m_rightEncoder.reset();

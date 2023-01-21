@@ -95,4 +95,11 @@ public class Vision {
     // }
 }
 
+  public static AprilTagFieldLayout getAprilTagFieldLayout(){
+    return aprilTagFieldLayout;
+  }
+
+  public static Pose3d getTagPose(int id){
+    return getAprilTagFieldLayout().getTagPose(id).get();
+  }
 }
