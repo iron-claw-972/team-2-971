@@ -62,6 +62,7 @@ public class Vision {
       aprilTagFieldLayout = new AprilTagFieldLayout(Constants.vision.kTagPoses, Constants.field.kFieldLength, Constants.field.kFieldWidth);
       System.out.println("Vision setup IOException: "+ex.getMessage());
     }
+    aprilTagFieldLayout.setOrigin(AprilTagFieldLayout.OriginPosition.kBlueAllianceWallRightSide);
     robotPoseEstimator = new RobotPoseEstimator(aprilTagFieldLayout, PoseStrategy.AVERAGE_BEST_TARGETS, camList);
   }
 
@@ -75,7 +76,7 @@ public class Vision {
   //   return null;
   // }
 
-  
+
 public static AprilTagFieldLayout getAprilTagFieldLayout(){
   return aprilTagFieldLayout;
 }
