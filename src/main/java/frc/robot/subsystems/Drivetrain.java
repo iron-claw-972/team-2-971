@@ -7,6 +7,10 @@
 
 package frc.robot.subsystems;
 
+import java.util.Optional;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -35,22 +39,18 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.numbers.N2;
 import edu.wpi.first.math.system.LinearSystem;
 import edu.wpi.first.math.system.plant.LinearSystemId;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Robot;
 import frc.robot.constants.Constants;
 import frc.robot.util.Vision;
 import lib.Motors;
@@ -257,16 +257,13 @@ public class Drivetrain extends SubsystemBase {
 
     if (result.isPresent() && result.get().getFirst() != null && result.get().getSecond() != null) {
       Pair<Pose3d,Double> camPose = result.get();
-      m_poseEstimator.addVisionMeasurement(camPose.getFirst().toPose2d(), Timer.getFPGATimestamp() - Units.millisecondsToSeconds(camPose.getSecond()));
-      // m_poseEstimator.addVisionMeasurement(new Pose2d(), 0.02);
-      // System.out.println(camPose.getFirst().toPose2d().toString());
+      m_poseEstimator.addVisionMeasurement(camPose.getFirst().toPose2d(), camPose.getSecond());
     }
   }
 
   public void printPose(){
-    Pose2d p = m_poseEstimator.getEstimatedPosition();
-    System.out.printf("ROBOT POSE:\ntoString(): %s\nRotation: %.2f degrees\nPosition: (%.2f, %.2f)\n", p.toString(), p.getRotation().getDegrees(), p.getX(), p.getY());
-  }
+    System.out.printf("ROBOT POSE: (%.2f, %.2f), %.2f degrees\n", getPose().getX(), getPose().getY(), getPose().getRotation().getDegrees());
+  };
 
   public void resetOdometry(Pose2d pose) {
     resetEncoders();
@@ -279,6 +276,15 @@ public class Drivetrain extends SubsystemBase {
   public void resetEncoders() {
     m_leftEncoder.reset();
     m_rightEncoder.reset();
+  }
+
+  public DifferentialDrivePoseEstimator getPoseEstimator(){
+    return m_poseEstimator;
+  }
+
+  /**Resets the pose to a specific spot*/
+  public void resetPose(double x, double y, double rotation){
+    m_poseEstimator.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getDistance(), m_rightEncoder.getDistance(), new Pose2d(x, y, new Rotation2d(rotation)));
   }
 
   public double getLeftWheelDistanceSinceOdometryReset(){
