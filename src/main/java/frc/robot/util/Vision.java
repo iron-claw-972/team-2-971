@@ -76,6 +76,9 @@ public class Vision {
   //   return null;
   // }
 
+  public static Pose3d getAprilTagPose(int id){
+    return aprilTagFieldLayout.getTagPose(id).get();
+  }
 
 public static AprilTagFieldLayout getAprilTagFieldLayout(){
   return aprilTagFieldLayout;

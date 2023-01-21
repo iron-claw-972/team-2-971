@@ -40,6 +40,7 @@ public class Robot extends TimedRobot {
   public static ShuffleboardManager shuffleboard = new ShuffleboardManager();
   // public static Vision vision = new Vision();
   // public static PIDController controller = new PIDController(1, 0, 0);
+  public final static Pose3d[] aprilTags = new Pose3d[9];
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -48,7 +49,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     PathLoader.loadPathGroups();
-
+    
     //drive.setDefaultCommand(new ArcadeDrive());
     drive.setDefaultCommand(new FFDrive());
    //drive.setDefaultCommand(new SenseAprilTagAtVelocity(drive, shuffleboard, controller));
@@ -61,6 +62,11 @@ public class Robot extends TimedRobot {
     
     shuffleboard.setup();
     Vision.setup();
+
+    // Put April tags in array
+    for(int i = 1; i <= 8; i++){
+      aprilTags[i]=Vision.getAprilTagPose(i);
+    }
   }
 
   /**
@@ -101,7 +107,7 @@ public class Robot extends TimedRobot {
       m_autoCommand.schedule();
     }
     // Sets the pose to in front of april tag 2 at the start of the game
-    Pose3d aprilTag2 = Vision.getAprilTagFieldLayout().getTagPose(2).get();
+    Pose3d aprilTag2 = aprilTags[2];
     drive.resetPose(aprilTag2.getX()-1, aprilTag2.getY(), 0);
   }
 
