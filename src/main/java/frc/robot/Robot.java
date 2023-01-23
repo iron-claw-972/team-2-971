@@ -44,7 +44,7 @@ public class Robot extends TimedRobot {
   public final static Node[][] redNodes = new Node[4][];
 
   // Where the robot will score.
-  public Node selectedNode = null;
+  public static Node selectedNode = null;
 
   // Possible teams
   public static enum Teams {BLUE, RED};
