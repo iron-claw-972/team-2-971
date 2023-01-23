@@ -11,11 +11,13 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.robot.Robot;
+import frc.robot.Robot.Teams;
 import frc.robot.commands.auto.PathPlannerCommand;
 
 public class ShuffleboardManager {
 
   SendableChooser<Command> m_autoCommand = new SendableChooser<>();
+  SendableChooser<Teams> m_team = new SendableChooser<>();
 
   ShuffleboardTab m_mainTab = Shuffleboard.getTab("Main");
   ShuffleboardTab m_autoTab = Shuffleboard.getTab("Auto");
@@ -31,11 +33,15 @@ public class ShuffleboardManager {
   public void setup() {
     LiveWindow.disableAllTelemetry(); // LiveWindow is causing periodic loop overruns
     setupAutoChooser();
+    setupTeamChooser();
     loadAllTabs();
   }
 
   public Command getAutonomousCommand() {
     return m_autoCommand.getSelected();
+  }
+  public Teams getTeam() {
+    return m_team.getSelected();
   }
 
   public void setupAutoChooser() {
@@ -44,6 +50,10 @@ public class ShuffleboardManager {
     m_autoCommand.addOption("OneDotAuto", new PathPlannerCommand("OneDotAuto", 0)); 
     m_autoCommand.addOption("TwoDotAuto", new PathPlannerCommand("TwoDotAuto", 0)); 
     m_autoCommand.addOption("ThreeDotAuto", new PathPlannerCommand("ThreeDotAuto", 0)); 
+  }
+  public void setupTeamChooser() {
+    m_team.addOption("Blue", Teams.BLUE);
+    m_team.addOption("Red", Teams.RED);
   }
 
   public void loadAllTabs() {
@@ -59,7 +69,7 @@ public class ShuffleboardManager {
   public void loadMainTab(){
     m_mainTab.addBoolean("Is Teleop", DriverStation::isTeleop);
     m_mainTab.addNumber("Time Left", DriverStation::getMatchTime);
-    
+    m_mainTab.add("Alliance Chooser", m_team);
   }
 
   public void loadAutoTab(){

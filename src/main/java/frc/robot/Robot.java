@@ -43,8 +43,12 @@ public class Robot extends TimedRobot {
   public final static Node[][] blueNodes = new Node[4][];
   public final static Node[][] redNodes = new Node[4][];
 
+  // Where the robot will score.
+  public Node selectedNode = null;
+
   // Possible teams
   public static enum Teams {BLUE, RED};
+  public static Teams team;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -113,6 +117,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     m_autoCommand = getAutonomousCommand();
+    team = getTeam();
   }
 
   /**
@@ -171,5 +176,8 @@ public class Robot extends TimedRobot {
    */
   public Command getAutonomousCommand() {
     return shuffleboard.getAutonomousCommand();
+  }
+  public Teams getTeam() {
+    return shuffleboard.getTeam();
   }
 }
