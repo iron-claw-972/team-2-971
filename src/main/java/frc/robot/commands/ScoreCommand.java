@@ -21,11 +21,9 @@ public class ScoreCommand extends SequentialCommandGroup{
     if(Robot.selectedNode==null){
         addCommands(new DoNothing());
     }else{
-      Pose2d p = Robot.selectedNode.pose.toPose2d();
-      Pose2d p2 = new Pose2d(0/*change to scoring x*/, p.getY(), new Rotation2d(Robot.team==Teams.RED?0:Math.PI));
       addCommands(
           new ParallelCommandGroup(
-              new MoveToPose(p2, drive),
+              new MoveToPose(Robot.selectedNode.scorePose, drive),
               new MoveArm(/*parameters*/)
           )
       );

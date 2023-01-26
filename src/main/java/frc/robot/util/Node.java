@@ -24,6 +24,7 @@ import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
@@ -44,6 +45,7 @@ public class Node {
     public final int row;
     public final int x;
     public final Pose3d pose;
+    public final Pose2d scorePose;
     public final Types type;
 
     /**
@@ -82,5 +84,6 @@ public class Node {
         }
         double y = tag.getY()+(x%3==2?0:Units.inchesToMeters(22))*((x%3==0)^(team==Teams.RED)?-1:1);
         pose=new Pose3d(x2, y, z, tag.getRotation());
+        scorePose=new Pose2d(tag.getX()+(15.25+26/2)*(team==Teams.RED?-1:1), y, new Rotation2d(team==Teams.RED?0:Math.PI));
     }
 }
