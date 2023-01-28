@@ -15,6 +15,8 @@ public class Operator {
     operator.get(DPad.LEFT).onTrue(new InstantCommand(()->Robot.DPadPress(DPad.LEFT)));
     operator.get(DPad.UP).onTrue(new InstantCommand(()->Robot.DPadPress(DPad.UP)));
     operator.get(DPad.RIGHT).onTrue(new InstantCommand(()->Robot.DPadPress(DPad.RIGHT)));
+    operator.get(DPad.DOWN).onTrue(new InstantCommand(()->Robot.DPadPress(DPad.DOWN)));
+  }
   }
 
 }

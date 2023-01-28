@@ -124,24 +124,29 @@ public class Robot extends TimedRobot {
 
   /**
    * Method to store DPad values and use them to set selectedNode
+   * Down clears the array
    * Left is 1, up is 2, and right is 3 for selection
    * For example, up right left will select the center grid, top row, and left spot.
-   * @param direction Which DPad button is pressed
+   * @param direction = Which DPad button is pressed
    */
   public static void DPadPress(DPad direction){
-    selectTime=selectTimeAmount;
-    int pressValue = direction==DPad.LEFT?1:direction==DPad.UP?2:3;
-    if(selectValues[0]==0){
-      selectValues[0]=pressValue;
-    }else if(selectValues[1]==0){
-      selectValues[1]=pressValue;
-    }else{
-      selectValues[2]=pressValue;
+    if(direction==DPad.DOWN){
       selectTime=1;
-      if(team==Teams.BLUE){
-        selectedNode=blueNodes[selectValues[1]][selectValues[0]*3-3+selectValues[2]];
+    }else{
+      selectTime=selectTimeAmount;
+      int pressValue = direction==DPad.LEFT?1:direction==DPad.UP?2:3;
+      if(selectValues[0]==0){
+        selectValues[0]=pressValue;
+      }else if(selectValues[1]==0){
+        selectValues[1]=pressValue;
       }else{
-        selectedNode=redNodes[selectValues[1]][selectValues[0]*3-3+selectValues[2]];
+        selectValues[2]=pressValue;
+        selectTime=1;
+        if(team==Teams.BLUE){
+          selectedNode=blueNodes[selectValues[1]][selectValues[0]*3-3+selectValues[2]];
+        }else{
+          selectedNode=redNodes[selectValues[1]][selectValues[0]*3-3+selectValues[2]];
+        }
       }
     }
   }
