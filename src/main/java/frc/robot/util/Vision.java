@@ -48,13 +48,21 @@ public class Vision {
  
 
   public static void setup() {
-    setup(new PhotonCamera(Constants.vision.kCameraName));
+    setup(new PhotonCamera(Constants.vision.kCameraName1), new PhotonCamera(Constants.vision.kCameraName2));
   }
 
-  public static void setup(PhotonCamera camera) {
-    ArrayList<Pair<PhotonCamera, Transform3d>> camList = new ArrayList<Pair<PhotonCamera, Transform3d>>(List.of(
-      new Pair<PhotonCamera, Transform3d>(camera, Constants.vision.kCameraToRobot)
-    ));
+  public static void setup(PhotonCamera camera1, PhotonCamera camera2) {
+    ArrayList<Pair<PhotonCamera, Transform3d>> camList;
+    if(Constants.vision.k2Cameras){
+      camList = new ArrayList<Pair<PhotonCamera, Transform3d>>(List.of(
+        new Pair<PhotonCamera, Transform3d>(camera1, Constants.vision.kCameraToRobot1),
+        new Pair<PhotonCamera, Transform3d>(camera2, Constants.vision.kCameraToRobot2)
+      ));
+    }else{
+      camList = new ArrayList<Pair<PhotonCamera, Transform3d>>(List.of(
+        new Pair<PhotonCamera, Transform3d>(camera1, Constants.vision.kCameraToRobot1)
+      ));
+    }
     getTagFieldLayout();
     aprilTagFieldLayout.setOrigin(AprilTagFieldLayout.OriginPosition.kBlueAllianceWallRightSide);
     
