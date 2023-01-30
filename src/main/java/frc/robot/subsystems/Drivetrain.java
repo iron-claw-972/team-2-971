@@ -258,6 +258,7 @@ public class Drivetrain extends SubsystemBase {
 
     if (result.isPresent() && result.get().getFirst() != null && result.get().getSecond() != null && result.get().getFirst().getX() > -10000 && result.get().getSecond() >= 0) {
       Pair<Pose3d,Double> camPose = result.get();
+      // System.out.println(result.get().getFirst().toPose2d().getRotation().getDegrees());
       m_poseEstimator.addVisionMeasurement(camPose.getFirst().toPose2d(), Timer.getFPGATimestamp() - Units.millisecondsToSeconds(camPose.getSecond()));
       // m_poseEstimator.addVisionMeasurement(new Pose2d(), 0.02);
       // System.out.println(camPose.getFirst().toPose2d().toString());
