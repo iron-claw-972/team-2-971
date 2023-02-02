@@ -44,6 +44,7 @@ import frc.robot.constants.Constants;
 
 public class Vision {
   private static RobotPoseEstimator robotPoseEstimator;
+  private static RobotPoseEstimator robotPoseEstimator2;
   private static AprilTagFieldLayout aprilTagFieldLayout;
  
 
@@ -68,7 +69,13 @@ public class Vision {
     
     robotPoseEstimator = new RobotPoseEstimator(aprilTagFieldLayout, PoseStrategy.AVERAGE_BEST_TARGETS, camList);
 
-    
+    if(Constants.vision.k2Cameras){
+      // camList = new ArrayList<Pair<PhotonCamera, Transform3d>>(List.of(
+      //   new Pair<PhotonCamera, Transform3d>(camera2, Constants.vision.kCameraToRobot2)
+      // ));
+      // robotPoseEstimator2 = new RobotPoseEstimator(aprilTagFieldLayout, PoseStrategy.AVERAGE_BEST_TARGETS, camList);    
+    }
+
   }
 
   public static AprilTagFieldLayout getTagFieldLayout() {
@@ -103,6 +110,18 @@ public class Vision {
     // } else {
     //     return new Pair<Pose2d, Double>(null, 0.0);
     // }
+}
+public static Optional<Pair<Pose3d,Double>> getEstimatedGlobalPose2(Pose2d prevEstimatedRobotPose) {
+  robotPoseEstimator2.setReferencePose(prevEstimatedRobotPose);
+  return robotPoseEstimator2.update();
+
+  // double currentTime = Timer.getFPGATimestamp();
+  // Optional<Pair<Pose3d, Double>> result = m_robotPoseEstimator.update();
+  // if (result.isPresent()) {
+  //     return new Pair<Pose2d, Double>(result.get().getFirst().toPose2d(), currentTime - result.get().getSecond());
+  // } else {
+  //     return new Pair<Pose2d, Double>(null, 0.0);
+  // }
 }
 
   public static AprilTagFieldLayout getAprilTagFieldLayout(){

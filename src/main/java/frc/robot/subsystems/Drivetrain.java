@@ -32,8 +32,11 @@ import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -255,13 +258,35 @@ public class Drivetrain extends SubsystemBase {
     );
 
     Optional<Pair<Pose3d,Double>> result = Vision.getEstimatedGlobalPose(m_poseEstimator.getEstimatedPosition());
+    // Optional<Pair<Pose3d,Double>> result2 = Vision.getEstimatedGlobalPose2(m_poseEstimator.getEstimatedPosition());
 
     if (result.isPresent() && result.get().getFirst() != null && result.get().getSecond() != null && result.get().getFirst().getX() > -10000 && result.get().getSecond() >= 0) {
       Pair<Pose3d,Double> camPose = result.get();
+      camPose.getFirst().transformBy(new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, Constants.vision.kCamera1Rotation)));
       // System.out.println(result.get().getFirst().toPose2d().getRotation().getDegrees());
       m_poseEstimator.addVisionMeasurement(camPose.getFirst().toPose2d(), Timer.getFPGATimestamp() - Units.millisecondsToSeconds(camPose.getSecond()));
       // m_poseEstimator.addVisionMeasurement(new Pose2d(), 0.02);
       // System.out.println(camPose.getFirst().toPose2d().toString());
+    }
+
+    // if (result2.isPresent() && result2.get().getFirst() != null && result2.get().getSecond() != null && result2.get().getFirst().getX() > -10000 && result2.get().getSecond() >= 0) {
+    //   Pair<Pose3d,Double> camPose = result2.get();
+    //   camPose.getFirst().transformBy(new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, Constants.vision.kCamera2Rotation)));
+    //   // System.out.println(result.get().getFirst().toPose2d().getRotation().getDegrees());
+    //   m_poseEstimator.addVisionMeasurement(camPose.getFirst().toPose2d(), Timer.getFPGATimestamp() - Units.millisecondsToSeconds(camPose.getSecond()));
+    //   // m_poseEstimator.addVisionMeasurement(new Pose2d(), 0.02);
+    //   // System.out.println(camPose.getFirst().toPose2d().toString());
+    // }
+  }
+
+  public void printVisionPose(){
+    Optional<Pair<Pose3d,Double>> result = Vision.getEstimatedGlobalPose(m_poseEstimator.getEstimatedPosition());
+    if (result.isPresent() && result.get().getFirst() != null && result.get().getSecond() != null && result.get().getFirst().getX() > -10000 && result.get().getSecond() >= 0) {
+      Pair<Pose3d,Double> camPose = result.get();
+      camPose.getFirst().transformBy(new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, Constants.vision.kCamera1Rotation)));
+      double r = (result.get().getFirst().toPose2d().getRotation().getDegrees());
+      Pose2d p = (camPose.getFirst().toPose2d());
+      System.out.printf("Pose from Vision: (%.2f, %.2f) at %.2f degrees", p.getX(), p.getY(), r);
     }
   }
 
