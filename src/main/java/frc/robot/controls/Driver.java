@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Robot;
 import frc.robot.constants.Constants;
+import frc.robot.util.Vision;
 import lib.controllers.GameController;
 import lib.controllers.GameController.Axis;
 import lib.controllers.GameController.Button;
@@ -21,6 +22,7 @@ public class Driver {
     // driver.get(Button.A).whenPressed(new AlignToPlant(false));
     driver.get(Button.X).onTrue(new InstantCommand(()->Robot.drive.printPose()));
     driver.get(Button.Y).toggleOnTrue(new RunCommand(()->Robot.drive.printVisionPose()));
+    driver.get(Button.B).onTrue(new InstantCommand(()->Vision.printEstimate()));
   }
 
   public static double getThrottleValue() {

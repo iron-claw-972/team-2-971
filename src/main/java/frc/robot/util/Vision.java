@@ -31,6 +31,7 @@ import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
@@ -44,7 +45,7 @@ import frc.robot.constants.Constants;
 
 public class Vision {
   private static RobotPoseEstimator robotPoseEstimator;
-  private static RobotPoseEstimator robotPoseEstimator2;
+  // private static RobotPoseEstimator robotPoseEstimator2;
   private static AprilTagFieldLayout aprilTagFieldLayout;
  
 
@@ -70,7 +71,7 @@ public class Vision {
     robotPoseEstimator = new RobotPoseEstimator(aprilTagFieldLayout, PoseStrategy.AVERAGE_BEST_TARGETS, camList);
 
     if(Constants.vision.k2Cameras){
-      // camList = new ArrayList<Pair<PhotonCamera, Transform3d>>(List.of(
+      // ArrayList<Pair<PhotonCamera, Transform3d>>camList = new ArrayList<Pair<PhotonCamera, Transform3d>>(List.of(
       //   new Pair<PhotonCamera, Transform3d>(camera2, Constants.vision.kCameraToRobot2)
       // ));
       // robotPoseEstimator2 = new RobotPoseEstimator(aprilTagFieldLayout, PoseStrategy.AVERAGE_BEST_TARGETS, camList);    
@@ -99,9 +100,27 @@ public class Vision {
   //   return null;
   // }
 
+  public static void printEstimate(){
+    robotPoseEstimator.setReferencePose(new Pose3d(0, 0, 0, new Rotation3d(0, 0, 0)));
+    Optional<Pair<Pose3d,Double>> r = robotPoseEstimator.update();
+    if(r.isPresent()){
+      System.out.printf("Present: %b\nPose: (%.2f, %.2f, %.2f)\nRotation: %.2f degrees\nTime: %.2f\n",
+        r.isPresent(), 
+        r.get().getFirst().getX(), 
+        r.get().getFirst().getY(), 
+        r.get().getFirst().getZ(), 
+        r.get().getFirst().getRotation().toRotation2d().getDegrees(), 
+        r.get().getSecond()
+      );
+    }else{
+      System.out.println("Result is not present");
+    }
+  }
+
   public static Optional<Pair<Pose3d,Double>> getEstimatedGlobalPose(Pose2d prevEstimatedRobotPose) {
     robotPoseEstimator.setReferencePose(prevEstimatedRobotPose);
-    return robotPoseEstimator.update();
+    Optional<Pair<Pose3d,Double>> r = robotPoseEstimator.update();
+    return r;
 
     // double currentTime = Timer.getFPGATimestamp();
     // Optional<Pair<Pose3d, Double>> result = m_robotPoseEstimator.update();
@@ -112,8 +131,9 @@ public class Vision {
     // }
 }
 public static Optional<Pair<Pose3d,Double>> getEstimatedGlobalPose2(Pose2d prevEstimatedRobotPose) {
-  robotPoseEstimator2.setReferencePose(prevEstimatedRobotPose);
-  return robotPoseEstimator2.update();
+  // robotPoseEstimator2.setReferencePose(prevEstimatedRobotPose);
+  // return robotPoseEstimator2.update();
+  return null;
 
   // double currentTime = Timer.getFPGATimestamp();
   // Optional<Pair<Pose3d, Double>> result = m_robotPoseEstimator.update();

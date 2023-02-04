@@ -270,10 +270,10 @@ public class Drivetrain extends SubsystemBase {
     }
 
     // if (result2.isPresent() && result2.get().getFirst() != null && result2.get().getSecond() != null && result2.get().getFirst().getX() > -10000 && result2.get().getSecond() >= 0) {
-    //   Pair<Pose3d,Double> camPose = result2.get();
-    //   camPose.getFirst().transformBy(new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, Constants.vision.kCamera2Rotation)));
+    //   Pair<Pose3d,Double> camPose2 = result2.get();
+    //   camPose2.getFirst().transformBy(new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, Constants.vision.kCamera2Rotation)));
     //   // System.out.println(result.get().getFirst().toPose2d().getRotation().getDegrees());
-    //   m_poseEstimator.addVisionMeasurement(camPose.getFirst().toPose2d(), Timer.getFPGATimestamp() - Units.millisecondsToSeconds(camPose.getSecond()));
+    //   m_poseEstimator.addVisionMeasurement(camPose2.getFirst().toPose2d(), Timer.getFPGATimestamp() - Units.millisecondsToSeconds(camPose2.getSecond()));
     //   // m_poseEstimator.addVisionMeasurement(new Pose2d(), 0.02);
     //   // System.out.println(camPose.getFirst().toPose2d().toString());
     // }
