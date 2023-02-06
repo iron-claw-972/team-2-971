@@ -57,12 +57,12 @@ public class Vision {
     ArrayList<Pair<PhotonCamera, Transform3d>> camList;
     if(Constants.vision.k2Cameras){
       camList = new ArrayList<Pair<PhotonCamera, Transform3d>>(List.of(
-        new Pair<PhotonCamera, Transform3d>(camera1, Constants.vision.kCameraToRobot1),
-        new Pair<PhotonCamera, Transform3d>(camera2, Constants.vision.kCameraToRobot2)
+        new Pair<PhotonCamera, Transform3d>(camera1, Constants.vision.kRobotToCamera1),
+        new Pair<PhotonCamera, Transform3d>(camera2, Constants.vision.kRobotToCamera2)
       ));
     }else{
       camList = new ArrayList<Pair<PhotonCamera, Transform3d>>(List.of(
-        new Pair<PhotonCamera, Transform3d>(camera1, Constants.vision.kCameraToRobot1)
+        new Pair<PhotonCamera, Transform3d>(camera1, Constants.vision.kRobotToCamera1)
       ));
     }
     getTagFieldLayout();
