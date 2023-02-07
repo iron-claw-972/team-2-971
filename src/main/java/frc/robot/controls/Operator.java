@@ -18,4 +18,5 @@ public class Operator {
     operator.get(DPad.DOWN).onTrue(new InstantCommand(()->Robot.DPadPress(DPad.DOWN)));
   }
 
+  public static void configureTestControls() {}
 }

@@ -5,6 +5,7 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Robot;
+import frc.robot.commands.TestVision;
 import frc.robot.constants.Constants;
 import frc.robot.util.Vision;
 import lib.controllers.GameController;
@@ -21,8 +22,12 @@ public class Driver {
     // driver.get(Button.Y).whenPressed(new AlignToPlant(true));
     // driver.get(Button.A).whenPressed(new AlignToPlant(false));
     driver.get(Button.X).onTrue(new InstantCommand(()->Robot.drive.printPose()));
-    driver.get(Button.Y).toggleOnTrue(new RunCommand(()->Robot.drive.printVisionPose()));
     driver.get(Button.B).onTrue(new InstantCommand(()->Vision.printEstimate()));
+  }
+
+  public static void configureTestControls() {
+    driver.get(Button.RB).onTrue(new TestVision(0.1));
+    driver.get(Button.LB).onTrue(new TestVision(-0.1));
   }
 
   public static double getThrottleValue() {
