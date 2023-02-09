@@ -24,12 +24,12 @@ public class Driver {
     // driver.get(Button.A).whenPressed(new AlignToPlant(false));
     driver.get(Button.X).onTrue(new InstantCommand(()->Robot.drive.printPose()));
     driver.get(Button.B).onTrue(new InstantCommand(()->Vision.printEstimate()));
+    driver.get(Button.RB).onTrue(new TestVision(0.1));
+    driver.get(Button.LB).onTrue(new TestVision(-0.1));
+    driver.get(Button.A).onTrue(new TestCameraPose(0.1));
   }
 
   public static void configureTestControls() {
-    driver.get(Button.RB).onTrue(new TestVision(0.1));
-    driver.get(Button.LB).onTrue(new TestVision(-0.1));
-    driver.get(Button.X).onTrue(new TestCameraPose(0.1));
   }
 
   public static double getThrottleValue() {
