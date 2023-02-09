@@ -20,7 +20,7 @@ public class TestVision extends CommandBase{
   private Pose2d currentPose;
   private int endCounter = 0;
   private int printCounter=0;
-  private double speed;
+  private double m_speed;
 
   //How many frames it has to not see anything to end the command
   private final int endDelay = 5;
@@ -34,10 +34,12 @@ public class TestVision extends CommandBase{
 
   public TestVision(double speed, Drivetrain drive){
     addRequirements(drive);
-    this.speed=speed;
+    m_drive=drive;
+    m_speed=speed;
   }
 
   private double getDist(){
+    // return 0;
     return m_drive.getLeftWheelDistanceSinceOdometryReset()/2+m_drive.getRightWheelDistanceSinceOdometryReset()/2;
   }
 
@@ -57,17 +59,17 @@ public class TestVision extends CommandBase{
 
   @Override
   public void execute(){
-    m_drive.arcadeDrive(speed, 0);
+    m_drive.arcadeDrive(m_speed, 0);
     if(getPose()==null){
       endCounter++;
     }else{
       endCounter = 0;
       printCounter++;
-      encoderPosition = getDist();
-      double dist1 = Math.abs(encoderPosition-encoderStart);
       currentPose = getPose();
-      double dist2 = Math.sqrt(Math.pow(currentPose.getX()-startPose.getX(), 2) + Math.pow(currentPose.getY()-startPose.getY(), 2));
+      encoderPosition = getDist();
       if(printCounter%printDelay==0){
+        double dist1 = Math.abs(encoderPosition-encoderStart);
+        double dist2 = Math.sqrt(Math.pow(currentPose.getX()-startPose.getX(), 2) + Math.pow(currentPose.getY()-startPose.getY(), 2));
         System.out.printf("\nEncoder distance: %.4f\nVision distance: %.4f\nDifference: %.4f\nPercent difference: %.4f%%\n", dist1, dist2, dist2-dist1, (dist2-dist1)/dist1*100);
       }
     }
