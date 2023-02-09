@@ -5,6 +5,7 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Robot;
+import frc.robot.commands.TestCameraPose;
 import frc.robot.commands.TestVision;
 import frc.robot.constants.Constants;
 import frc.robot.util.Vision;
@@ -28,6 +29,7 @@ public class Driver {
   public static void configureTestControls() {
     driver.get(Button.RB).onTrue(new TestVision(0.1));
     driver.get(Button.LB).onTrue(new TestVision(-0.1));
+    driver.get(Button.X).onTrue(new TestCameraPose(0.1));
   }
 
   public static double getThrottleValue() {
