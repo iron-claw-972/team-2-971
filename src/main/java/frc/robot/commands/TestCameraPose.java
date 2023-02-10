@@ -28,11 +28,12 @@ public class TestCameraPose extends CommandBase{
 
   public TestCameraPose(double speed, Drivetrain drive){
     addRequirements(drive);
-    this.speed=speed;
+    this.speed = speed;
+    m_drive = drive;
   }
 
   private Pose2d getPose(){
-    Optional<Pair<Pose3d, Double>> p = Vision.getEstimatedGlobalPose(currentPose);
+    Optional<Pair<Pose3d, Double>> p = Vision.getEstimatedGlobalPose(currentPose==null?m_drive.getPose():currentPose);
     if(p.isPresent() && p.get().getFirst() != null && p.get().getSecond() != null && p.get().getFirst().getX() > -10000 && p.get().getSecond() >= 0){
       return p.get().getFirst().toPose2d();
     }
@@ -65,6 +66,9 @@ public class TestCameraPose extends CommandBase{
   }
 
   private Pose2d calculatePose(Pose2d pose1, Pose2d pose2){
+    if(pose1==null||pose2==null){
+      return null;
+    }
     double side1 = findDistance(pose1, pose2);
     double angle1 = Math.abs(pose1.getRotation().getRadians()-pose2.getRotation().getRadians());
     if(angle1>Math.PI){

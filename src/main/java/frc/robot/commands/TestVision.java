@@ -5,6 +5,7 @@ import java.util.Optional;
 import edu.wpi.first.math.Pair;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -17,7 +18,7 @@ public class TestVision extends CommandBase{
   private double encoderStart;
   private Pose2d startPose;
   private double encoderPosition;
-  private Pose2d currentPose;
+  private Pose2d currentPose = null;
   private int endCounter = 0;
   private int printCounter=0;
   private double m_speed;
@@ -44,7 +45,7 @@ public class TestVision extends CommandBase{
   }
 
   private Pose2d getPose(){
-    Optional<Pair<Pose3d, Double>> p = Vision.getEstimatedGlobalPose(currentPose);
+    Optional<Pair<Pose3d, Double>> p = Vision.getEstimatedGlobalPose(currentPose==null?m_drive.getPose():currentPose);
     if(p.isPresent() && p.get().getFirst() != null && p.get().getSecond() != null && p.get().getFirst().getX() > -10000 && p.get().getSecond() >= 0){
       return p.get().getFirst().toPose2d();
     }
