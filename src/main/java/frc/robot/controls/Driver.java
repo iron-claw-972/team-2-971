@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Robot;
+import frc.robot.commands.Align;
 import frc.robot.commands.TestCameraPose;
 import frc.robot.commands.TestVision;
 import frc.robot.commands.TestVision2;
@@ -14,6 +15,7 @@ import frc.robot.util.Vision;
 import lib.controllers.GameController;
 import lib.controllers.GameController.Axis;
 import lib.controllers.GameController.Button;
+import lib.controllers.GameController.DPad;
 
 public class Driver {
   private static GameController driver = new GameController(Constants.oi.kDriverJoy);
@@ -32,6 +34,10 @@ public class Driver {
     driver.get(Button.Y).onTrue(new SequentialCommandGroup(new InstantCommand(()->Vision.printEstimate()), new InstantCommand(()->Robot.drive.printPose())));
     driver.get(driver.RIGHT_TRIGGER_BUTTON).onTrue(new TestVision2(-0.1, 3));
     driver.get(driver.LEFT_TRIGGER_BUTTON).onTrue(new TestVision2(0.1, 3));
+    driver.get(DPad.LEFT).onTrue(new Align(0, Robot.drive));
+    driver.get(DPad.DOWN).onTrue(new Align(Math.PI/2, Robot.drive));
+    driver.get(DPad.RIGHT).onTrue(new Align(Math.PI, Robot.drive));
+    driver.get(DPad.UP).onTrue(new Align(-Math.PI/2, Robot.drive));
   }
 
   public static void configureTestControls() {
