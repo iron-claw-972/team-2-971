@@ -82,9 +82,12 @@ public class TestVision2 extends CommandBase{
       }
       if(turned){
         closest=Math.min(dist2, closest);
-        if(dist2-closest>0.075);
-        endCounter+=2;
-        m_drive.tankDrivePercentOutput(0, 0);
+        if(dist2-closest>0.05){
+          System.out.println(dist2);
+          System.out.println(closest);
+          endCounter+=2;
+          m_drive.tankDrivePercentOutput(0, 0);
+        }
       }
     }
   }
