@@ -316,11 +316,13 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getLeftWheelDistanceSinceOdometryReset(){
-    return m_leftMotor1.getSelectedSensorPosition()/2048/62*8*2*Math.PI*2;
+    return m_leftEncoder.getDistance();
+    // return m_leftMotor1.getSelectedSensorPosition();
   }
 
   public double getRightWheelDistanceSinceOdometryReset(){
-    return m_rightMotor1.getSelectedSensorPosition()/2048/62*8*2*Math.PI*2;
+    return m_rightEncoder.getDistance();
+    // return m_rightMotor1.getSelectedSensorPosition();
   }
 
   public Pose2d getPose() {
@@ -349,8 +351,8 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void tankDrivePercentOutput(double leftPower, double rightPower){
-    m_leftMotor1.set(ControlMode.PercentOutput, 0.25);
-    m_rightMotor1.set(ControlMode.PercentOutput, 0.25);
+    m_leftMotor1.set(ControlMode.PercentOutput, leftPower);
+    m_rightMotor1.set(ControlMode.PercentOutput, rightPower);
   }
 
   public double getDriveSpeed(){

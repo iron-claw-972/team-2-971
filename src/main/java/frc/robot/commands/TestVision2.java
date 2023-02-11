@@ -13,30 +13,31 @@ import frc.robot.Robot;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.util.Vision;
 
-public class TestVision extends CommandBase{
+public class TestVision2 extends CommandBase{
   private Drivetrain m_drive;
   private double encoderStart;
   private Pose2d startPose;
   private double encoderPosition;
   private Pose2d currentPose = null;
   private int endCounter = 0;
-  private int printCounter=0;
   private double m_speed;
+  private int direction = 1;
+  private boolean turned = false;
+  private double distanceToMove;
+  private double closest;
 
   //How many frames it has to not see anything to end the command
   private final int endDelay = 5;
 
-  //How many frames it will wait between prints
-  private final int printDelay = 50;
-
-  public TestVision(double speed){
-    this(speed, Robot.drive);
+  public TestVision2(double speed, double distance){
+    this(speed, distance, Robot.drive);
   }
 
-  public TestVision(double speed, Drivetrain drive){
+  public TestVision2(double speed, double distance, Drivetrain drive){
     addRequirements(drive);
     m_drive=drive;
     m_speed=speed;
+    distanceToMove=distance;
   }
 
   private double getDist(){
@@ -56,28 +57,41 @@ public class TestVision extends CommandBase{
   public void initialize(){
     encoderStart=getDist();
     startPose=getPose();
+    direction=1;
+    turned=false;
+    endCounter=0;
+    closest=100;
   }
 
   @Override
   public void execute(){
-    m_drive.tankDrivePercentOutput(m_speed, m_speed);
+    m_drive.tankDrivePercentOutput(direction*m_speed, direction*m_speed);
     if(getPose()==null){
       endCounter++;
     }else{
-      endCounter = 0;
-      printCounter++;
+      endCounter = Math.max(0, endCounter-1);
       currentPose = getPose();
       encoderPosition = getDist();
-      if(printCounter%printDelay==0){
-        double dist1 = Math.abs(encoderPosition-encoderStart);
-        double dist2 = Math.sqrt(Math.pow(currentPose.getX()-startPose.getX(), 2) + Math.pow(currentPose.getY()-startPose.getY(), 2));
-        System.out.printf("\nEncoder distance: %.4f\nVision distance: %.4f\nDifference: %.4f\nPercent difference: %.4f%%\n", dist1, dist2, dist2-dist1, (dist2-dist1)/dist1*100);
+      double dist1 = Math.abs(encoderPosition-encoderStart);
+      double dist2 = Math.sqrt(Math.pow(currentPose.getX()-startPose.getX(), 2) + Math.pow(currentPose.getY()-startPose.getY(), 2));
+      if(dist2>=distanceToMove&&direction==1){
+        System.out.printf("Encoder distance: %.4f\n", dist1);
+        direction=-1;
+        turned=true;
+        // endCounter=1000;
+      }
+      if(turned){
+        closest=Math.min(dist2, closest);
+        if(dist2-closest>0.075);
+        endCounter+=2;
+        m_drive.tankDrivePercentOutput(0, 0);
       }
     }
   }
 
   @Override
   public void end(boolean interrupted){
+    System.out.printf("\nVision distance: %.4f\nEncoder distance: %.4f\n", Math.sqrt(Math.pow(currentPose.getX()-startPose.getX(), 2) + Math.pow(currentPose.getY()-startPose.getY(), 2)), Math.abs(encoderPosition-encoderStart));
     m_drive.tankDrivePercentOutput(0, 0);
   }
 

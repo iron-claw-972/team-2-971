@@ -4,9 +4,11 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Robot;
 import frc.robot.commands.TestCameraPose;
 import frc.robot.commands.TestVision;
+import frc.robot.commands.TestVision2;
 import frc.robot.constants.Constants;
 import frc.robot.util.Vision;
 import lib.controllers.GameController;
@@ -24,9 +26,12 @@ public class Driver {
     // driver.get(Button.A).whenPressed(new AlignToPlant(false));
     driver.get(Button.X).onTrue(new InstantCommand(()->Robot.drive.printPose()));
     driver.get(Button.B).onTrue(new InstantCommand(()->Vision.printEstimate()));
-    driver.get(Button.RB).onTrue(new TestVision(0.2));
-    driver.get(Button.LB).onTrue(new TestVision(-0.2));
-    driver.get(Button.A).onTrue(new TestCameraPose(0.2));
+    driver.get(Button.RB).onTrue(new TestVision(-0.1));
+    driver.get(Button.LB).onTrue(new TestVision(0.1));
+    driver.get(Button.A).onTrue(new TestCameraPose(0.3));
+    driver.get(Button.Y).onTrue(new SequentialCommandGroup(new InstantCommand(()->Vision.printEstimate()), new InstantCommand(()->Robot.drive.printPose())));
+    driver.get(driver.RIGHT_TRIGGER_BUTTON).onTrue(new TestVision2(-0.1, 3));
+    driver.get(driver.LEFT_TRIGGER_BUTTON).onTrue(new TestVision2(0.1, 3));
   }
 
   public static void configureTestControls() {

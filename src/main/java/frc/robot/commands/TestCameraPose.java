@@ -42,6 +42,7 @@ public class TestCameraPose extends CommandBase{
 
   @Override
   public void initialize(){
+    timer = 100;
     currentPose=getPose();
     poses = new Pose2d[timer];
     robotPoses = new ArrayList<Pose2d>(0);
@@ -49,10 +50,23 @@ public class TestCameraPose extends CommandBase{
 
   @Override
   public void execute(){
-    m_drive.arcadeDrive(0, speed);
+    m_drive.tankDrivePercentOutput(speed, -speed);
     timer--;
     if(getPose()!=null&&timer>=0){
       poses[timer]=getPose();
+      int calculations=0;
+      for(int i = timer; i < poses.length && calculations < 3; i++){
+        if(poses[i]!=null){
+          double angle = Math.abs(poses[i].getRotation().getDegrees()-poses[timer].getRotation().getDegrees());
+          if(angle>180){
+            angle = 360-angle;
+          }
+          if(angle>10&&angle<85){
+            robotPoses.add(calculatePose(poses[i], poses[timer]));
+            calculations++;
+          }
+        }
+      }
       currentPose=getPose();
     }
   }
@@ -68,6 +82,9 @@ public class TestCameraPose extends CommandBase{
   private Pose2d calculatePose(Pose2d pose1, Pose2d pose2){
     if(pose1==null||pose2==null){
       return null;
+    }
+    if(true){
+      // return null;
     }
     double side1 = findDistance(pose1, pose2);
     double angle1 = Math.abs(pose1.getRotation().getRadians()-pose2.getRotation().getRadians());
@@ -91,26 +108,31 @@ public class TestCameraPose extends CommandBase{
 
   @Override
   public void end(boolean interrupted){
-    m_drive.arcadeDrive(0, 0);
+    m_drive.tankDrivePercentOutput(0, 0);
 
     if(interrupted){
       System.out.println("The test was interrupted. Run it again.");
       return;
     }
-
-    for(int i = 0; i < poses.length; i++){
-      for(int j = 0; j < poses.length; j++){
-        if(poses[i]!=null&&poses[j]!=null){
-          double angle = Math.abs(poses[i].getRotation().getDegrees()-poses[j].getRotation().getDegrees());
-          if(angle>180){
-            angle = 360-angle;
-          }
-          if(angle>10&&angle<85){
-            robotPoses.add(calculatePose(poses[i], poses[j]));
-          }
-        }
-      }
+    if(robotPoses.size()==0){
+      System.out.println("Could not find an April tag. Run the test again in a different spot.");
+      return;
     }
+
+    // for(int i = 0; i < poses.length; i++){
+    //   for(int j = 0; j < poses.length; j++){
+    //     if(poses[i]!=null&&poses[j]!=null){
+    //       double angle = Math.abs(poses[i].getRotation().getDegrees()-poses[j].getRotation().getDegrees());
+    //       if(angle>180){
+    //         angle = 360-angle;
+    //       }
+    //       if(angle>10&&angle<85){
+    //         robotPoses.add(calculatePose(poses[i], poses[j]));
+    //         break;
+    //       }
+    //     }
+    //   }
+    // }
 
     double totalX = 0;
     double totalY = 0;
